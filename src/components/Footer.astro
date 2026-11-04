@@ -1,0 +1,13 @@
+---
+import { SITE } from '../site.config';
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>{SITE.name}</strong> by {SITE.author} · <a href={SITE.org.url}>{SITE.org.name}</a></p>
+    <p class="meta"><a href={SITE.links.site}>Insyra</a> · <a href={SITE.links.docs}>Docs</a> · <a href={SITE.links.github}>GitHub</a> · <a href="/rss.xml">RSS</a></p>
+  </div>
+</footer>
+<style>
+  .site-footer { margin-top: 4rem; padding: 1.5rem 0; background: var(--bg-soft); border-top: 1px solid var(--border); }
+  .site-footer p { margin: .2rem 0; }
+</style>

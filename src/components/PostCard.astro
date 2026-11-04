@@ -1,0 +1,10 @@
+---
+import { urlOf, readingTime, fmtDate, tagSlug, type Post } from '../lib/posts';
+const { post } = Astro.props as { post: Post };
+---
+<li class="card">
+  <p class="meta"><time datetime={post.data.pubDate.toISOString()}>{fmtDate(post.data.pubDate)}</time> · {readingTime(post.body)} min read</p>
+  <h3><a href={urlOf(post)}>{post.data.title}</a></h3>
+  <p>{post.data.description}</p>
+  <div>{post.data.tags.map((t) => <a class="tag" href={`/tags/${tagSlug(t)}/`}>#{t}</a>)}</div>
+</li>

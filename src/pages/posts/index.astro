@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts } from '../../lib/posts';
+const posts = await getPosts();
+---
+<Base title="Posts" description="All posts on Insyra With Me.">
+  <div class="wrap"><h1>Posts</h1><ul class="card-list">{posts.map((p) => <PostCard post={p} />)}</ul></div>
+</Base>

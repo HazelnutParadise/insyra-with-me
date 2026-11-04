@@ -1,0 +1,27 @@
+---
+import { SITE } from '../site.config';
+const p = Astro.url.pathname;
+---
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/logo-icon.png" alt="" width="32" height="32" /><span>Insyra <em>With Me</em></span></a>
+    <nav aria-label="Main">
+      <a href="/posts/" aria-current={p.startsWith('/posts') ? 'page' : undefined}>Posts</a>
+      <a href="/tags/" aria-current={p.startsWith('/tags') ? 'page' : undefined}>Tags</a>
+      <a href="/rss.xml">RSS</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a href={SITE.links.site} rel="noopener">Official site</a>
+      <a href={SITE.links.docs} rel="noopener">Docs</a>
+      <a href={SITE.links.github} rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+<style>
+  .site-header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 3px solid var(--accent); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: .6rem; padding-bottom: .6rem; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--text); text-decoration: none; }
+  .brand em { font-style: normal; color: var(--accent); }
+  nav { display: flex; gap: .9rem; flex-wrap: wrap; align-items: center; font-size: .95rem; }
+  nav a { color: var(--text); text-decoration: none; } nav a:hover, nav a[aria-current] { color: var(--link); text-decoration: underline; }
+  .sep { width: 1px; height: 1.1rem; background: var(--border); }
+</style>
