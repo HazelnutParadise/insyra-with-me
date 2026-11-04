@@ -1,10 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PostCard from '../../components/PostCard.astro';
-import { getPosts, CATEGORIES, type Post } from '../../lib/posts';
+import { getPosts, activeCategories, CATEGORIES, type Post } from '../../lib/posts';
 export async function getStaticPaths() {
   const posts = await getPosts();
-  return CATEGORIES.map((c) => ({ params: { slug: c.slug }, props: { cat: c, posts: posts.filter((p) => p.data.category === c.slug) } }));
+  return (await activeCategories()).map((c) => ({ params: { slug: c.slug }, props: { cat: c, posts: posts.filter((p) => p.data.category === c.slug) } }));
 }
 const { cat, posts } = Astro.props as { cat: (typeof CATEGORIES)[number]; posts: Post[] };
 ---

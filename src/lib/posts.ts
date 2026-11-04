@@ -3,9 +3,17 @@ export type Post = CollectionEntry<'posts'>;
 export const langOf = (p: Post) => p.id.split('/')[0];
 export const slugOf = (p: Post) => p.id.split('/').slice(1).join('/');
 export const urlOf = (p: Post) => (langOf(p) === 'en' ? `/posts/${slugOf(p)}/` : `/${langOf(p)}/posts/${slugOf(p)}/`);
+// Sample posts (frontmatter `sample: true`) are included unless INCLUDE_SAMPLES=false.
+// `npm run build:prod` sets INCLUDE_SAMPLES=false. SAMPLE_LIMIT=<n> keeps only the n newest
+// samples (used to preview sparse layouts; never needed in normal work).
+const env = (typeof process !== 'undefined' ? process.env : {}) as Record<string, string | undefined>;
+export const INCLUDE_SAMPLES = env.INCLUDE_SAMPLES !== 'false';
+const SAMPLE_LIMIT = env.SAMPLE_LIMIT !== undefined ? Number(env.SAMPLE_LIMIT) : Infinity;
 export async function getPosts(lang = 'en') {
-  const all = await getCollection('posts', (p) => langOf(p) === lang && (import.meta.env.DEV || !p.data.draft));
-  return all.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const all = (await getCollection('posts', (p) => langOf(p) === lang && !p.data.draft && (INCLUDE_SAMPLES || !p.data.sample)))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  let samples = 0;
+  return all.filter((p) => !p.data.sample || ++samples <= SAMPLE_LIMIT);
 }
 export const readingTime = (body = '') => Math.max(1, Math.round(body.split(/\s+/).filter(Boolean).length / 220));
 export const tagSlug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -20,3 +28,9 @@ export const CATEGORIES = [
 ] as const;
 export type CategorySlug = (typeof CATEGORIES)[number]['slug'];
 export const categoryOf = (slug: string) => CATEGORIES.find((c) => c.slug === slug)!;
+
+/** Categories that have at least one published post, in CATEGORIES order. Empty ones are never linked or built. */
+export async function activeCategories(lang = 'en') {
+  const used = new Set((await getPosts(lang)).map((p) => p.data.category));
+  return CATEGORIES.filter((c) => used.has(c.slug));
+}

@@ -5,6 +5,7 @@ pubDate: 2026-11-03
 tags: ["sample", "datatable"]
 category: guides
 draft: false
+sample: true
 ---
 
 > **Sample tutorial (placeholder).** All code is copied from the [Insyra README](https://github.com/HazelnutParadise/insyra) (dev branch, read on 2026-11-04).

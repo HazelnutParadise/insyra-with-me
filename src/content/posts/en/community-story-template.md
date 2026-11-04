@@ -5,6 +5,7 @@ pubDate: 2026-11-01
 category: community
 tags: ["sample", "template"]
 draft: false
+sample: true
 ---
 
 > **Template only.** This is not a real user story. Every `[bracketed]` item must be replaced with facts the person or team has confirmed and agreed to publish.

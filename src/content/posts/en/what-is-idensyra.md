@@ -5,6 +5,7 @@ pubDate: 2026-11-02
 category: ecosystem
 tags: ["sample", "idensyra"]
 draft: false
+sample: true
 ---
 
 > **Sample ecosystem post (placeholder).** Every fact below is taken from the [Idensyra README](https://github.com/HazelnutParadise/idensyra) (main branch, read on 2026-11-05). The README is in Chinese; this is a summary in English.

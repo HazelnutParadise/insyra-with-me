@@ -5,6 +5,7 @@ pubDate: 2026-11-04
 tags: ["sample", "getting-started", "datalist"]
 category: guides
 draft: false
+sample: true
 ---
 
 > **Sample tutorial (placeholder).** All commands and code are copied from the [Insyra README](https://github.com/HazelnutParadise/insyra) (dev branch, read on 2026-11-04).

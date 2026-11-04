@@ -1,6 +1,7 @@
 ---
 import { SITE } from '../site.config';
-import { CATEGORIES } from '../lib/posts';
+import { activeCategories } from '../lib/posts';
+const cats = await activeCategories();
 const p = Astro.url.pathname;
 ---
 <header class="site-header">
@@ -14,9 +15,9 @@ const p = Astro.url.pathname;
       <a href={SITE.links.github} rel="noopener">GitHub</a>
     </nav>
   </div>
-  <nav aria-label="Categories" class="cats"><div class="wrap cat-row">
-    {CATEGORIES.map((c) => <a href={`/category/${c.slug}/`} aria-current={p.startsWith(`/category/${c.slug}`) ? 'page' : undefined}>{c.name}</a>)}
-  </div></nav>
+  {cats.length > 0 && <nav aria-label="Categories" class="cats"><div class="wrap cat-row">
+    {cats.map((c) => <a href={`/category/${c.slug}/`} aria-current={p.startsWith(`/category/${c.slug}`) ? 'page' : undefined}>{c.name}</a>)}
+  </div></nav>}
 </header>
 <style>
   .site-header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 3px solid var(--accent); }

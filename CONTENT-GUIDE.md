@@ -93,3 +93,13 @@ Start from `community-story-template.md`. Use only facts and numbers the person 
 - Code must be copyable and real. Check every API against the README or docs.
 - Never invent numbers, benchmarks or user quotes.
 - Never rename a published slug. If you have to, add a 301 (see DEPLOY.md).
+
+## Sample posts and drafts
+
+- Placeholder or sample posts carry `sample: true` in their frontmatter. All 5 current posts are samples.
+- `npm run dev` and `npm run build` include samples (`INCLUDE_SAMPLES` defaults to true).
+- **`npm run build:prod`** sets `INCLUDE_SAMPLES=false`, which removes samples from pages, category pages, RSS, sitemap and JSON-LD. It then runs `scripts/check-no-samples.mjs`, which fails the build if any sample slug appears anywhere in `dist/`.
+- **Simple alternative:** set `draft: true`. Drafts are never published, in any build.
+- **To publish a real post:** remove `sample: true` (or set it to false) and keep `draft: false`.
+- **Layout previews only:** `SAMPLE_LIMIT=<n> npm run build` keeps just the n newest samples, for checking the 1-post or 2-post layouts. Never ship it.
+- **Categories:** a category appears in the nav, on the home page, as a page and in the sitemap only once it has a published post. You don't need to do anything to enable one.

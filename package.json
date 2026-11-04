@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "build:prod": "INCLUDE_SAMPLES=false astro build && node scripts/check-no-samples.mjs",
+    "check:samples": "node scripts/check-no-samples.mjs"
   },
   "keywords": [],
   "author": "",
