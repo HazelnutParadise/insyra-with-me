@@ -48,3 +48,15 @@ Neutrals, all of which also appear in insyra-website main `theme.css`: `#FFFFFF`
 - An orange rule under the header, and cards with an orange left edge.
 - Tag pills, a sticky table of contents on screens at least 1100px wide, and `#` heading anchors.
 - Code blocks show a language label and a copy button.
+
+## Editorial style (round 3, replaces rounded bordered cards)
+
+- No rounded corners or boxed borders anywhere. Every shape is sharp: hero geometry is square blocks and square dots.
+- Structure comes from rules. A thick 6px rule opens each section and list, 1px rules divide items, and 4px over 1px marks table heads and feet.
+- Category grid is asymmetric flat color blocks numbered 01–05: a big blue block, an orange band and tinted cream or surface blocks, each with an arrow.
+- Post lists (home, /posts, category pages) are numbered rows (01, 02…) separated by rules, with a hover underline in orange.
+- Hero code is a flat dark block with a thick orange top bar. The data table is drawn with rules only.
+- The primary CTA is a flat square block. Secondary links are underline and arrow text (`.arrow`).
+- Tags are uppercase #text, and the category tag is an underlined link.
+- Post code blocks are a flat surface band with a thick top rule. The copy button is an underlined text button. Prose tables use rules only.
+- On mobile, the category nav wraps instead of scrolling sideways, so no label gets cut off.

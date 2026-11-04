@@ -2,7 +2,7 @@ import { chromium } from 'playwright';
 const base = process.env.BASE ?? 'http://localhost:4329';
 const post = '/posts/how-to-install-insyra-and-create-a-datalist/';
 const shots = [
-  ['home', '/', 1280, 900], ['home-mobile', '/', 390, 844], ['posts', '/posts/', 1280, 900], ['post', post, 1280, 900], ['post-mobile', post, 390, 844],
+  ['home', '/', 1280, 900], ['home-mobile', '/', 390, 844], ['posts', '/posts/', 1280, 900], ['posts-mobile', '/posts/', 390, 844], ['post', post, 1280, 900], ['post-mobile', post, 390, 844],
 ];
 const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome' });
 for (const scheme of ['light', 'dark']) {

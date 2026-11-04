@@ -26,5 +26,5 @@
 
 ## Lighthouse (local preview, 2026-11-05)
 
-- Home: Perf 100 / A11y 100 / BP 100 / SEO 100, LCP 0.9 s, CLS 0, TBT 0 ms
+- Home: Perf 100 / A11y 100 / BP 100 / SEO 100 (round 3 editorial style)
 - Post: Perf 100 / A11y 100 / BP 100 / SEO 100, LCP 0.8 s, CLS 0.002, TBT 0 ms

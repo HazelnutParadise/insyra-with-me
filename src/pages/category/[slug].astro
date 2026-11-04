@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 const { cat, posts } = Astro.props as { cat: (typeof CATEGORIES)[number]; posts: Post[] };
 ---
 <Base title={cat.name} description={`${cat.name} on Insyra With Me: ${cat.blurb}`}>
-  <div class="wrap"><h1>{cat.name}</h1><p class="meta">{cat.blurb}</p>
+  <div class="wrap"><header class="page-head"><h1>{cat.name}</h1><p class="meta">{cat.blurb}</p></header>
     {posts.length ? <ul class="card-list">{posts.map((p) => <PostCard post={p} />)}</ul> : <p>No posts in this category yet.</p>}
   </div>
 </Base>
