@@ -1,10 +1,10 @@
 ---
-import { urlOf, readingTime, fmtDate, tagSlug, type Post } from '../lib/posts';
+import { urlOf, readingTime, fmtDate, categoryOf, type Post } from '../lib/posts';
 const { post } = Astro.props as { post: Post };
 ---
 <li class="card">
-  <p class="meta"><time datetime={post.data.pubDate.toISOString()}>{fmtDate(post.data.pubDate)}</time> · {readingTime(post.body)} min read</p>
+  <p class="meta"><a class="cat" href={`/category/${post.data.category}/`}>{categoryOf(post.data.category).name}</a> · <time datetime={post.data.pubDate.toISOString()}>{fmtDate(post.data.pubDate)}</time> · {readingTime(post.body)} min read</p>
   <h3><a href={urlOf(post)}>{post.data.title}</a></h3>
   <p>{post.data.description}</p>
-  <div>{post.data.tags.map((t) => <a class="tag" href={`/tags/${tagSlug(t)}/`}>#{t}</a>)}</div>
 </li>
+<style>.cat { font-weight: 700; color: var(--link); text-decoration: none; text-transform: uppercase; letter-spacing: .06em; font-size: .78rem; }</style>

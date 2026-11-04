@@ -15,7 +15,8 @@
 | Search Console + Bing Webmaster | 部署後要做 | 用 DNS TXT 驗證 insyra.me,提交 sitemap-index.xml;Bing 可從 Search Console 匯入 |
 | HTTPS | 部署後要做 | Cloudflare Always Use HTTPS |
 | www vs apex | Tim 要決定(建議 apex) | 決定後設 301;`SITE_URL` 要一致 |
-| 站內連到官網與文件 | 已內建 | header、footer、首頁 hero 都連官網、Docs、GitHub |
+| 站內連到官網與文件 | 已內建 | header、footer、首頁 hero 都連官網、Docs、GitHub;寫作規範見 CONTENT-GUIDE.md(搜尋意圖標題、每篇連到官方文件) |
+| 分類頁 | 已內建 | `/category/<slug>/` 五個分類,含在 sitemap |
 | 官網 navbar 與 GitHub README 回連 | Tim 要決定 | 要改官網與 README,需 Tim 另外同意;官網 `#hash` 路由不可動 |
 | hreflang(之後 zh-TW) | Tim 要決定 | 內容已按 `posts/en/`、`posts/zh-tw/` 分資料夾,URL `/zh-tw/posts/<slug>/`;加中文時再加 `hreflang="en"`、`"zh-Hant-TW"`、`x-default` 和 sitemap i18n 設定 |
 | 圖片 alt | 已內建(寫作時要填) | 範例都有 alt;`coverAlt` 欄位;見 CONTENT-GUIDE.md |
@@ -23,8 +24,7 @@
 | Core Web Vitals | 已在本機量測 | 見下方 |
 | llms.txt | Tim 要決定(選用) | 尚未建立 |
 
-## Lighthouse 本機實測
-2026-11-05 00:04(Asia/Taipei),Lighthouse(npx 最新版)對本機 `astro preview` 的 `/posts/sample-install-insyra/`,headless Chrome,預設模擬行動裝置:
-- Performance 100、Accessibility 100(首次跑 95,原因是 header 橘字對比不足,已改成橘底黑字;首頁 Accessibility 也是 100)、Best Practices 100、SEO 100
-- LCP 0.8 s、FCP 0.8 s、TBT 0 ms、CLS 0
-- 本機數字不代表正式環境;上線後要用 PageSpeed Insights 與 Search Console 的實際使用者資料再看
+## Lighthouse (local preview, 2026-11-05)
+
+- Home: Perf 100 / A11y 100 / BP 100 / SEO 100, LCP 0.9 s, CLS 0, TBT 0 ms
+- Post: Perf 100 / A11y 100 / BP 100 / SEO 100, LCP 0.8 s, CLS 0.002, TBT 0 ms

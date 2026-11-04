@@ -26,8 +26,25 @@ Neutrals, all of which also appear in insyra-website main `theme.css`: `#FFFFFF`
 - Code: `ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`, from main `frontend/src/views/Syralit.vue:337`.
 - The official site's `index.html` loads no web-font link (only Font Awesome 4.7), so Inter and Space Grotesk show only if the visitor has them installed. This blog self-hosts both through `@fontsource-variable/inter` and `@fontsource-variable/space-grotesk`, so they look the same everywhere.
 
+## Home hero (revised 2026-11-05)
+- **H1:** the brand text "Insyra / With Me" is the page's only `<h1>`. It is set in Space Grotesk 700 at `clamp(3.4rem, 11vw, 9.5rem)`, with line-height .88 and tight tracking. "Insyra" is `#21449B` on light and `#FFFFFF` on dark. "With Me" is `#EE9A2C` on light and `#F6AB42` on dark.
+- **Subtitle and lead:** the subtitle reads "Guides, stories and news from the Insyra community." The lead text describes the guides, use cases, community, ecosystem, resources, events and release news.
+- **Background:** cream `#FFF4E6` on light, `#1A1A1A` on dark. An inline SVG sits behind the content:
+  - a large circle in `#21449B` (`#2550B0` at 55% opacity on dark)
+  - a circle in `#F6AB42`
+  - two diagonal bars in `#EE9A2C`, echoing the slashes in the logo
+  - a dot grid in `#2550B0` (`#F6AB42` on dark)
+- **Motif** (replaces the white logo tile):
+  - A code card on `#1A1A1A` with a `#242424` title bar holds the README's DataTable snippet. Window dots are `#F6AB42`, `#FFF4E6` and `#2550B0`. Function names are `#F6AB42`, strings `#FFF4E6` and numbers `#EE9A2C`.
+  - Overlapping it is a white table card with a `#21449B` header and a `#FFF4E6` striped row. It shows the snippet's data: Alice 28, Bob 34, and Charlie 29 faded.
+  - On screens up to 900px wide the motif stacks under the text.
+- **Category grid:** cards with top borders alternating between `#21449B` and `#F6AB42`.
+- **Header:** a second row lists the five categories on a `#FFF4E6` background (`#242424` on dark).
+- **OG image:** `public/og-default.png` uses the same elements on cream.
+- **Colours:** none were added. Only the five brand colours and the neutrals listed above are used. Shadows are `rgba(0,0,0,.2–.28)`, which is black with alpha.
+
 ## Character
-- A blue brand hero with an orange underline bar and the logo on a white tile.
+- The oversized brand H1 with geometric brand shapes and the code and table motif. The logo tile was removed.
 - An orange rule under the header, and cards with an orange left edge.
 - Tag pills, a sticky table of contents on screens at least 1100px wide, and `#` heading anchors.
 - Code blocks show a language label and a copy button.

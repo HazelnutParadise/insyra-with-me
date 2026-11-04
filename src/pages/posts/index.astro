@@ -4,6 +4,6 @@ import PostCard from '../../components/PostCard.astro';
 import { getPosts } from '../../lib/posts';
 const posts = await getPosts();
 ---
-<Base title="Posts" description="All posts on Insyra With Me.">
-  <div class="wrap"><h1>Posts</h1><ul class="card-list">{posts.map((p) => <PostCard post={p} />)}</ul></div>
+<Base title="All posts" description="All posts on Insyra With Me: Insyra guides and use cases, community stories, ecosystem projects, resources, events and release news.">
+  <div class="wrap"><h1>All posts</h1><p class="meta">Guides, stories, ecosystem projects and news from around Insyra.</p><ul class="card-list">{posts.map((p) => <PostCard post={p} />)}</ul></div>
 </Base>

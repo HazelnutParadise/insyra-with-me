@@ -1,27 +1,32 @@
 ---
 import { SITE } from '../site.config';
+import { CATEGORIES } from '../lib/posts';
 const p = Astro.url.pathname;
 ---
 <header class="site-header">
   <div class="wrap bar">
     <a class="brand" href="/"><img src="/logo-icon.png" alt="" width="32" height="32" /><span>Insyra <em>With Me</em></span></a>
-    <nav aria-label="Main">
-      <a href="/posts/" aria-current={p.startsWith('/posts') ? 'page' : undefined}>Posts</a>
-      <a href="/tags/" aria-current={p.startsWith('/tags') ? 'page' : undefined}>Tags</a>
-      <a href="/rss.xml">RSS</a>
-      <span class="sep" aria-hidden="true"></span>
+    <nav aria-label="External" class="ext">
+      <a href="/posts/" aria-current={p.startsWith('/posts') ? 'page' : undefined}>All posts</a>
+      <a href="/rss.xml">RSS</a><span class="sep" aria-hidden="true"></span>
       <a href={SITE.links.site} rel="noopener">Official site</a>
       <a href={SITE.links.docs} rel="noopener">Docs</a>
       <a href={SITE.links.github} rel="noopener">GitHub</a>
     </nav>
   </div>
+  <nav aria-label="Categories" class="cats"><div class="wrap cat-row">
+    {CATEGORIES.map((c) => <a href={`/category/${c.slug}/`} aria-current={p.startsWith(`/category/${c.slug}`) ? 'page' : undefined}>{c.name}</a>)}
+  </div></nav>
 </header>
 <style>
   .site-header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 3px solid var(--accent); }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: .6rem; padding-bottom: .6rem; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: .6rem 1rem; flex-wrap: wrap; padding-top: .55rem; padding-bottom: .45rem; }
   .brand { display: flex; align-items: center; gap: .55rem; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--text); text-decoration: none; }
   .brand em { font-style: normal; background: var(--accent); color: var(--black); padding: 0 .35rem; border-radius: 4px; }
-  nav { display: flex; gap: .9rem; flex-wrap: wrap; align-items: center; font-size: .95rem; }
   nav a { color: var(--text); text-decoration: none; } nav a:hover, nav a[aria-current] { color: var(--link); text-decoration: underline; }
+  .ext { display: flex; gap: .9rem; flex-wrap: wrap; align-items: center; font-size: .92rem; }
   .sep { width: 1px; height: 1.1rem; background: var(--border); }
+  .cats { border-top: 1px solid var(--border); background: var(--bg-soft); }
+  .cat-row { display: flex; gap: 1.3rem; overflow-x: auto; white-space: nowrap; padding-top: .4rem; padding-bottom: .4rem; font-size: .9rem; font-weight: 600; scrollbar-width: none; }
+  @media (max-width: 640px) { .ext a[rel] { display: none; } .ext .sep { display: none; } }
 </style>

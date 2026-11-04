@@ -1,43 +1,99 @@
 ---
 import Base from '../layouts/Base.astro';
 import PostCard from '../components/PostCard.astro';
-import { getPosts } from '../lib/posts';
+import { getPosts, CATEGORIES } from '../lib/posts';
 import { SITE, SITE_URL } from '../site.config';
-const posts = (await getPosts()).slice(0, 5);
+const posts = (await getPosts()).slice(0, 6);
 const ld = {
   '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: SITE_URL + '/', description: SITE.description, inLanguage: 'en',
+  about: { '@type': 'SoftwareSourceCode', name: 'Insyra', codeRepository: SITE.links.github, programmingLanguage: 'Go' },
   author: { '@type': 'Person', name: SITE.author },
   publisher: { '@type': 'Organization', name: SITE.org.name, url: SITE.org.url },
 };
 ---
 <Base jsonLd={ld}>
   <section class="hero">
+    <svg class="geo" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <circle cx="1050" cy="120" r="260" class="g-blue" />
+      <circle cx="1120" cy="620" r="150" class="g-orange" />
+      <g class="g-slash"><rect x="560" y="300" width="900" height="38" transform="rotate(-14 560 300)" />
+        <rect x="600" y="390" width="900" height="24" transform="rotate(-14 600 390)" /></g>
+      <g class="g-dots">{Array.from({ length: 6 }, (_, r) => Array.from({ length: 10 }, (_, c) => <circle cx={40 + c * 28} cy={560 + r * 22} r="3" />))}</g>
+    </svg>
     <div class="wrap hero-in">
-      <div>
-        <p class="kicker">Insyra With Me</p>
-        <h1>{SITE.tagline}</h1>
-        <p class="lead">Notes and guides about <a href={SITE.links.site}>Insyra</a>, a data analysis library for Go, by the person who builds it.</p>
-        <p class="cta"><a class="btn primary" href="/posts/">Read the posts</a><a class="btn" href={SITE.links.docs}>Insyra docs</a></p>
+      <div class="copy">
+        <h1 class="brand-h1"><span>Insyra</span> <span class="with">With Me</span></h1>
+        <p class="sub">{SITE.tagline}.</p>
+        <p class="lead">The guide and community blog around <a href={SITE.links.site}>Insyra</a>, the data analysis library for Go: how-to guides and use cases, stories from people using it, ecosystem projects like Idensyra and Syralit, resources, events and release news.</p>
+        <p class="cta"><a class="btn primary" href="/category/guides/">Browse the guides</a><a class="btn" href={SITE.links.docs}>Read the docs</a></p>
       </div>
-      <img class="hero-logo" src="/logo-icon.png" alt="Insyra logo" width="200" height="200" />
+      <div class="motif" aria-hidden="true">
+        <div class="code-card">
+          <div class="dots"><i></i><i></i><i></i><span>main.go</span></div>
+<pre><b>dt</b> := insyra.<em>NewDataTable</em>(
+    insyra.<em>NewDataList</em>(<s>"Alice"</s>, <s>"Bob"</s>, <s>"Charlie"</s>).<em>SetName</em>(<s>"Name"</s>),
+    insyra.<em>NewDataList</em>(<u>28</u>, <u>34</u>, <u>29</u>).<em>SetName</em>(<s>"Age"</s>),
+).<em>SetName</em>(<s>"Team Members"</s>)
+
+insyra.<em>Show</em>(<s>"Preview"</s>, dt, <u>2</u>)</pre>
+        </div>
+        <div class="table-card">
+          <p class="t-title">Team Members</p>
+          <table><thead><tr><th>Name</th><th>Age</th></tr></thead>
+            <tbody><tr><td>Alice</td><td>28</td></tr><tr><td>Bob</td><td>34</td></tr><tr class="fade"><td>Charlie</td><td>29</td></tr></tbody></table>
+        </div>
+      </div>
     </div>
   </section>
   <section class="wrap">
+    <h2>Explore by category</h2>
+    <ul class="cat-grid">{CATEGORIES.map((c) => <li><a href={`/category/${c.slug}/`}><strong>{c.name}</strong><span>{c.blurb}</span></a></li>)}</ul>
     <h2>Latest posts</h2>
     <ul class="card-list">{posts.map((p) => <PostCard post={p} />)}</ul>
     <p><a href="/posts/">All posts →</a></p>
   </section>
 </Base>
 <style>
-  .hero { background: var(--hero-bg); color: var(--hero-text); padding: 3.5rem 0; margin-bottom: 2rem; border-bottom: 6px solid var(--accent); }
-  .hero a { color: var(--brand-orange-logo); }
-  .hero-in { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-  .kicker { text-transform: uppercase; letter-spacing: .15em; font-weight: 700; color: var(--brand-orange-logo); margin: 0; font-size: .85rem; }
-  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: .4rem 0 1rem; max-width: 20ch; }
-  .lead { font-size: 1.15rem; max-width: 46ch; }
-  .cta { display: flex; gap: .8rem; flex-wrap: wrap; }
-  .btn { padding: .6rem 1.1rem; border-radius: 8px; border: 2px solid var(--brand-orange-logo); color: var(--white) !important; text-decoration: none; font-weight: 600; }
-  .btn.primary { background: var(--brand-orange-logo); color: var(--black) !important; }
-  .hero-logo { background: var(--white); border-radius: 24px; padding: 1rem; width: 180px; height: auto; }
-  @media (max-width: 700px) { .hero-logo { display: none; } }
+  .hero { --h-bg: var(--brand-cream); --h-text: var(--gray-20); --h-title: var(--brand-blue-logo); --h-with: var(--brand-orange);
+    position: relative; overflow: hidden; background: var(--h-bg); color: var(--h-text); padding: clamp(2.5rem, 7vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4.5rem); border-bottom: 6px solid var(--brand-orange-logo); margin-bottom: 2.5rem; }
+  @media (prefers-color-scheme: dark) { .hero { --h-bg: var(--gray-10); --h-text: var(--gray-88); --h-title: var(--white); --h-with: var(--brand-orange-logo); } }
+  .geo { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .g-blue { fill: var(--brand-blue-logo); opacity: .9; } .g-orange { fill: var(--brand-orange-logo); opacity: .85; }
+  .g-slash rect { fill: var(--brand-orange); opacity: .9; } .g-dots circle { fill: var(--brand-blue); opacity: .35; }
+  @media (prefers-color-scheme: dark) { .g-blue { fill: var(--brand-blue); opacity: .55; } .g-dots circle { fill: var(--brand-orange-logo); opacity: .3; } }
+  .hero-in { position: relative; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 2.5rem; align-items: center; }
+  .brand-h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(3.4rem, 11vw, 9.5rem); line-height: .88; letter-spacing: -0.045em; margin: 0 0 1.2rem; color: var(--h-title); }
+  .brand-h1 span { display: block; } .brand-h1 .with { color: var(--h-with); }
+  @media (prefers-color-scheme: light) { .brand-h1 .with { display: inline-block; color: var(--gray-10); background: var(--brand-orange-logo); padding: 0 .12em .06em; border-radius: .08em; margin-top: .06em; } }
+  .sub { font-family: var(--font-display); font-size: clamp(1.25rem, 2.4vw, 1.75rem); font-weight: 600; margin: 0 0 .8rem; color: var(--h-title); }
+  .lead { font-size: 1.08rem; max-width: 46ch; margin: 0 0 1.4rem; }
+  .hero .lead a { color: var(--h-title); font-weight: 600; }
+  .cta { display: flex; gap: .8rem; flex-wrap: wrap; margin: 0; }
+  .btn { padding: .65rem 1.15rem; border-radius: 8px; border: 2px solid var(--h-title); color: var(--h-title); text-decoration: none; font-weight: 700; background: var(--h-bg); }
+  .btn.primary { background: var(--brand-blue-logo); border-color: var(--brand-blue-logo); color: var(--white); }
+  @media (prefers-color-scheme: dark) { .btn.primary { background: var(--brand-orange-logo); border-color: var(--brand-orange-logo); color: var(--black); } }
+  .motif { position: relative; min-height: 22rem; }
+  .code-card { background: var(--gray-10); color: var(--gray-88); border-radius: 14px; box-shadow: 0 18px 40px rgba(0,0,0,.28); border: 1px solid var(--gray-20); transform: rotate(-2deg); overflow: hidden; }
+  .dots { display: flex; gap: .35rem; align-items: center; padding: .55rem .8rem; background: var(--gray-14); font-size: .75rem; color: var(--gray-88); }
+  .dots i { width: .65rem; height: .65rem; border-radius: 50%; background: var(--brand-orange-logo); } .dots i:nth-child(2) { background: var(--brand-cream); } .dots i:nth-child(3) { background: var(--brand-blue); }
+  .dots span { margin-left: .5rem; font-family: var(--font-mono); }
+  .code-card pre { margin: 0; padding: 1rem 1.1rem 1.3rem; font-family: var(--font-mono); font-size: clamp(.62rem, 1vw, .8rem); line-height: 1.6; overflow: hidden; white-space: pre; }
+  .code-card b { color: var(--white); font-weight: 600; } .code-card em { font-style: normal; color: var(--brand-orange-logo); }
+  .code-card s { text-decoration: none; color: var(--brand-cream); } .code-card u { text-decoration: none; color: var(--brand-orange); }
+  .table-card { position: absolute; right: -0.5rem; bottom: -1rem; width: 15rem; background: var(--white); color: var(--gray-20); border-radius: 12px; border-top: 6px solid var(--brand-blue-logo); box-shadow: 0 14px 30px rgba(0,0,0,.22); transform: rotate(3deg); padding: .8rem 1rem 1rem; }
+  .t-title { margin: 0 0 .4rem; font-family: var(--font-display); font-weight: 700; color: var(--brand-blue-logo); }
+  .table-card table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  .table-card th { text-align: left; background: var(--brand-blue-logo); color: var(--white); padding: .3rem .5rem; }
+  .table-card td { padding: .3rem .5rem; border-bottom: 1px solid var(--gray-88); } .table-card tr:nth-child(2) td { background: var(--brand-cream); }
+  .table-card .fade td { color: var(--gray-33); font-style: italic; }
+  @media (max-width: 900px) {
+    .hero-in { grid-template-columns: 1fr; }
+    .motif { min-height: 0; margin-top: 1rem; }
+    .table-card { position: relative; right: auto; bottom: auto; margin: -1.5rem 0 0 auto; width: 13rem; }
+  }
+  @media (max-width: 480px) { .code-card pre { font-size: .56rem; } }
+  .cat-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .8rem; margin-bottom: 2.5rem; }
+  .cat-grid a { display: flex; flex-direction: column; gap: .3rem; height: 100%; padding: .9rem 1rem; border-radius: 10px; border: 1px solid var(--border); border-top: 4px solid var(--brand-blue-logo); color: var(--text); text-decoration: none; background: var(--bg); }
+  .cat-grid li:nth-child(even) a { border-top-color: var(--brand-orange-logo); }
+  .cat-grid a:hover { border-color: var(--accent); } .cat-grid strong { font-family: var(--font-display); } .cat-grid span { font-size: .88rem; color: var(--muted); }
 </style>

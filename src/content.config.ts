@@ -11,6 +11,7 @@ const posts = defineCollection({
       description: z.string(),
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
+      category: z.enum(['guides', 'community', 'ecosystem', 'resources-events', 'releases']),
       tags: z.array(z.string()).default([]),
       cover: image().optional(),
       coverAlt: z.string().optional(),

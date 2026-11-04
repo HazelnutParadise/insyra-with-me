@@ -1,15 +1,19 @@
 import { chromium } from 'playwright';
 const base = process.env.BASE ?? 'http://localhost:4329';
-const pages = { home: '/', posts: '/posts/', post: '/posts/sample-install-insyra/' };
+const post = '/posts/how-to-install-insyra-and-create-a-datalist/';
+const shots = [
+  ['home', '/', 1280, 900], ['home-mobile', '/', 390, 844], ['posts', '/posts/', 1280, 900], ['post', post, 1280, 900], ['post-mobile', post, 390, 844],
+];
 const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome' });
 for (const scheme of ['light', 'dark']) {
-  const ctx = await browser.newContext({ colorScheme: scheme, viewport: { width: 1280, height: 900 } });
-  const page = await ctx.newPage();
-  for (const [name, path] of Object.entries(pages)) {
+  for (const [name, path, w, h] of shots) {
+    const ctx = await browser.newContext({ colorScheme: scheme, viewport: { width: w, height: h }, deviceScaleFactor: w < 500 ? 2 : 1 });
+    const page = await ctx.newPage();
     await page.goto(base + path, { waitUntil: 'networkidle' });
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    if (overflow > 0) console.log(`horizontal overflow ${overflow}px on ${name}-${scheme}`);
     await page.screenshot({ path: `screenshots/${name}-${scheme}.png`, fullPage: true });
+    await ctx.close();
   }
-  if (scheme === 'light') console.log('copy buttons:', await page.locator('.copy-btn').count(), 'labels:', await page.locator('.code-bar .lang').allTextContents());
-  await ctx.close();
 }
 await browser.close();

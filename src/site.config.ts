@@ -2,8 +2,8 @@
 export const SITE_URL = 'https://insyra.me';
 export const SITE = {
   name: 'Insyra With Me',
-  tagline: 'Data analysis in Go, written down as I build it',
-  description: 'Notes, guides and build logs about Insyra, the Go data analysis library by Hazelnut Paradise.',
+  tagline: 'Guides, stories and news from the Insyra community',
+  description: 'The Insyra community blog: how-to guides and use cases for data analysis in Go, community stories, ecosystem projects like Idensyra and Syralit, resources, events and release news.',
   author: 'Tim Lai',
   org: { name: 'Hazelnut Paradise', url: 'https://github.com/HazelnutParadise' },
   lang: 'en',

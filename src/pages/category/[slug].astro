@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts, CATEGORIES, type Post } from '../../lib/posts';
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return CATEGORIES.map((c) => ({ params: { slug: c.slug }, props: { cat: c, posts: posts.filter((p) => p.data.category === c.slug) } }));
+}
+const { cat, posts } = Astro.props as { cat: (typeof CATEGORIES)[number]; posts: Post[] };
+---
+<Base title={cat.name} description={`${cat.name} on Insyra With Me: ${cat.blurb}`}>
+  <div class="wrap"><h1>{cat.name}</h1><p class="meta">{cat.blurb}</p>
+    {posts.length ? <ul class="card-list">{posts.map((p) => <PostCard post={p} />)}</ul> : <p>No posts in this category yet.</p>}
+  </div>
+</Base>
