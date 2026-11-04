@@ -1,3 +1,6 @@
+# Insyra With Me
+
+The Insyra community blog (Astro, static). `npm install`, then `npm run dev`. Docs: DESIGN.md, CONTENT-GUIDE.md, SEO-CHECKLIST.md, DEPLOY.md.
 
 ## Builds
 
