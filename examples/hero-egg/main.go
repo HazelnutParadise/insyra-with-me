@@ -6,19 +6,18 @@ import (
 	"github.com/HazelnutParadise/insyra"
 )
 
-// Real dates from the GitHub API: repos/HazelnutParadise/insyra (created_at) and /releases.
-// published_at (UTC) converted to Asia/Taipei (UTC+8) dates.
+// Dates (Asia/Taipei) from the GitHub API: repos/HazelnutParadise/insyra
+// (created_at) and releases/tags/v0.1.0, releases/tags/v0.2.0.
 func main() {
-	steps := insyra.NewDataList("Created",
-		"v0.2.4", "v0.3.0", "v0.3.4").SetName("Milestone")
-	dates := insyra.NewDataList("2024-08-29", "2025-09-20",
-		"2026-07-18", "2026-09-28").SetName("Date")
+	steps := insyra.NewDataList("Created", "v0.1.0").
+		SetName("Milestone")
+	dates := insyra.NewDataList("2024-08-29", "2025-02-10").
+		SetName("Date")
 	dt := insyra.NewDataTable(steps, dates).
 		SetName("Insyra Milestones")
 
 	dt.AppendRowsByColName(map[string]any{
-		"Milestone": "v0.3.5", "Date": "2026-10-24",
+		"Milestone": "v0.2.0", "Date": "2025-05-30",
 	})
-	fmt.Println("Insyra With Me:",
-		dt.NumRows(), "milestones and counting")
+	fmt.Println("Insyra With Me: since", dates.Get(0))
 }
