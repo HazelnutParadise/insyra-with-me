@@ -18,8 +18,6 @@ const ld = {
     <svg class="geo" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <rect x="760" y="0" width="440" height="430" class="g-blue" />
       <rect x="980" y="430" width="220" height="270" class="g-orange" />
-      <rect x="640" y="640" width="560" height="10" class="g-rule" />
-      <rect x="640" y="662" width="340" height="2" class="g-rule" />
       <g class="g-dots">{Array.from({ length: 5 }, (_, r) => Array.from({ length: 9 }, (_, c) => <rect x={40 + c * 26} y={590 + r * 20} width="6" height="6" />))}</g>
     </svg>
     <div class="wrap hero-in">
@@ -30,8 +28,8 @@ const ld = {
         <p class="cta"><a class="btn" href="/category/guides/">Browse the guides <span aria-hidden="true">→</span></a><a class="arrow" href={SITE.links.docs}>Read the docs <span aria-hidden="true">↗</span></a></p>
       </div>
       <div class="motif">
-        <div class="code-block" id="egg" tabindex="0" role="button" aria-pressed="false" aria-labelledby="egg-hint">
-          <p class="file"><span>main.go</span><span class="hint" id="egg-hint">Click or press Enter to run main.go</span></p>
+        <div class="code-block" id="egg">
+          <p class="file"><span>main.go</span><button type="button" class="hint" id="egg-btn" aria-pressed="false">Click or press Enter to run</button></p>
 <pre><span class="ln" style="--i:0"><b>names</b> := insyra.<em>NewDataList</em>(</span><span class="ln" style="--i:1">    <s>"Alice"</s>, <s>"Bob"</s>, <s>"Charlie"</s>,</span><span class="ln" style="--i:2">).<em>SetName</em>(<s>"Name"</s>)</span><span class="ln" style="--i:3"><b>ages</b> := insyra.<em>NewDataList</em>(<u>28</u>, <u>34</u>, <u>29</u>).</span><span class="ln" style="--i:4">    <em>SetName</em>(<s>"Age"</s>)</span><span class="ln" style="--i:5"><b>dt</b> := insyra.<em>NewDataTable</em>(names, ages).</span><span class="ln" style="--i:6">    <em>SetName</em>(<s>"Team Members"</s>)</span><span class="ln" style="--i:7"> </span><span class="ln" style="--i:8">dt.<em>AppendRowsByColName</em>(<b>map</b>[<b>string</b>]<b>any</b>&#123;</span><span class="ln" style="--i:9">    <s>"Name"</s>: <s>"You"</s>, <s>"Age"</s>: <u>1</u>,</span><span class="ln" style="--i:10">&#125;)</span><span class="ln" style="--i:11">fmt.<em>Println</em>(<s>"Insyra With Me:"</s>,</span><span class="ln" style="--i:12">    dt.<em>NumRows</em>(), <s>"members and counting"</s>)</span></pre>
           <p class="out"><span class="prompt" aria-hidden="true">$ go run .</span> <span class="res" data-res="Insyra With Me: 4 members and counting">// ready when you are</span></p>
         </div>
@@ -69,15 +67,14 @@ const ld = {
   <script is:inline>
 (() => { const b = document.getElementById('egg'); if (!b) return;
   const live = document.getElementById('egg-live'), res = b.querySelector('.res'), idle = res.textContent, m = b.closest('.motif');
-  const rm = matchMedia('(prefers-reduced-motion: reduce)'); let t;
-  const set = (s) => { m.dataset.egg = s; b.setAttribute('aria-pressed', s === 'idle' ? 'false' : 'true'); };
+  const btn = document.getElementById('egg-btn'); const rm = matchMedia('(prefers-reduced-motion: reduce)'); let t;
+  const set = (s) => { m.dataset.egg = s; btn.setAttribute('aria-pressed', s === 'idle' ? 'false' : 'true'); };
   const done = () => { set('done'); res.textContent = res.dataset.res; live.textContent = 'Ran main.go. Output: ' + res.dataset.res + '. A row for You was added to the table.'; };
   const go = () => { clearTimeout(t);
     if (m.dataset.egg && m.dataset.egg !== 'idle') { set('idle'); res.textContent = idle; live.textContent = 'Example reset.'; return; }
     if (rm.matches) return done();
     set('running'); res.textContent = '…'; t = setTimeout(done, b.querySelectorAll('.ln').length * 140 + 400); };
   b.addEventListener('click', go);
-  b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
 })();
   </script>
 </Base>
@@ -119,11 +116,11 @@ const ld = {
   @media (max-width: 900px) { .hero-in { grid-template-columns: 1fr; } }
   /* Easter egg: click / Enter / Space on the code block runs it */
   .code-block { cursor: pointer; outline: none; transition: transform .15s; }
-  .code-block:focus-visible { box-shadow: 0 0 0 4px var(--h-bg), 0 0 0 8px var(--brand-blue); }
-  @media (prefers-color-scheme: dark) { .code-block:focus-visible { box-shadow: 0 0 0 4px var(--h-bg), 0 0 0 8px var(--brand-orange-logo); } }
+  .code-block:has(.hint:focus-visible) { box-shadow: 0 0 0 4px var(--h-bg), 0 0 0 8px var(--brand-blue); }
+  @media (prefers-color-scheme: dark) { .code-block:has(.hint:focus-visible) { box-shadow: 0 0 0 4px var(--h-bg), 0 0 0 8px var(--brand-orange-logo); } }
   .file { display: flex; justify-content: space-between; gap: 1rem; }
-  .hint { color: var(--gray-88); letter-spacing: .06em; text-transform: none; }
-  .code-block:hover .hint, .code-block:focus-visible .hint { color: var(--white); text-decoration: underline; }
+  .hint { font: inherit; letter-spacing: .06em; text-transform: none; color: var(--gray-88); background: none; border: 0; padding: 0; cursor: pointer; outline: none; }
+  .code-block:hover .hint, .hint:focus-visible { color: var(--white); text-decoration: underline; }
   .ln { display: block; min-height: 1.6em; }
   .out { margin: 0; padding: .55rem 1.1rem; min-height: 1.6em; border-top: 1px solid var(--gray-33); font-family: var(--font-mono); font-size: clamp(.66rem, 1vw, .82rem); line-height: 1.6; color: var(--gray-88); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .prompt { color: var(--brand-orange-logo); font-weight: 700; }
