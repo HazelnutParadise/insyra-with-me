@@ -17,7 +17,7 @@ Set up a Go project with Insyra and use a `DataList` to store some numbers and c
 ## Prerequisites
 
 - Go installed ([download](https://golang.org/dl/))
-- An editor. The README suggests VSCode, or [Idensyra](https://github.com/HazelnutParadise/idensyra) if you want something lighter.
+- An editor such as VS Code.
 
 ## Step 1: Create a Go module
 

@@ -7,7 +7,7 @@ Insyra With Me is the blog for the Insyra community and ecosystem. It covers how
 |---|---|---|
 | `guides` | Guides & Use Cases | How to do X with Insyra, and worked examples on real data |
 | `community` | Community & Stories | Real people and teams, published only with their permission and their facts |
-| `ecosystem` | Ecosystem | Idensyra, Syralit and other projects around Insyra (facts from their repos) |
+| `ecosystem` | Ecosystem | Syralit and other projects around Insyra (facts from their repos) |
 | `resources-events` | Resources & Events | Talks, workshops, meetups, learning links |
 | `releases` | Release News | One post per notable release, based on the GitHub release notes |
 

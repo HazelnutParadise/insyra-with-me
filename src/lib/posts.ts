@@ -22,7 +22,7 @@ export const fmtDate = (d: Date) => d.toLocaleDateString('en-US', { year: 'numer
 export const CATEGORIES = [
   { slug: 'guides', name: 'Guides & Use Cases', blurb: 'How to do things with Insyra, plus worked examples on real data.' },
   { slug: 'community', name: 'Community & Stories', blurb: 'People and teams using Insyra, in their own words.' },
-  { slug: 'ecosystem', name: 'Ecosystem', blurb: 'Projects around Insyra, such as Idensyra and Syralit.' },
+  { slug: 'ecosystem', name: 'Ecosystem', blurb: 'Projects around Insyra, such as Syralit, for interactive data apps in Go.' },
   { slug: 'resources-events', name: 'Resources & Events', blurb: 'Talks, workshops, links and learning material.' },
   { slug: 'releases', name: 'Release News', blurb: 'What is new in each Insyra release.' },
 ] as const;
