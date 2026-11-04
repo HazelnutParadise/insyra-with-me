@@ -25,7 +25,7 @@ const ld = {
         <h1 class="brand-h1"><span>Insyra</span> <span class="with">With Me</span></h1>
         <p class="sub">{SITE.tagline}.</p>
         <p class="lead">The guide and community blog around <a href={SITE.links.site}>Insyra</a>, the data analysis library for Go: how-to guides and use cases, stories from people using it, ecosystem projects like Syralit, resources, events and release news.</p>
-        <p class="cta"><a class="btn" href="/category/guides/">Browse the guides <span aria-hidden="true">→</span></a><a class="arrow" href={SITE.links.docs}>Read the docs <span aria-hidden="true">↗</span></a></p>
+        <p class="cta"><a class="btn" href="/posts/">Read the latest <span aria-hidden="true">→</span></a><a class="btn btn-alt" href={SITE.links.site} target="_blank" rel="noopener">Visit Insyra <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></p>
       </div>
       <div class="motif">
         <div class="code-block" id="egg">
@@ -94,11 +94,13 @@ const ld = {
   .sub { font-family: var(--font-display); font-size: clamp(1.25rem, 2.4vw, 1.75rem); font-weight: 600; margin: 0 0 .8rem; color: var(--h-title); border-top: 4px solid var(--h-title); padding-top: .7rem; max-width: 26ch; }
   .lead { font-size: 1.08rem; max-width: 46ch; margin: 0 0 1.6rem; }
   .hero .lead a { color: var(--h-title); font-weight: 600; }
-  .cta { display: flex; gap: 1.6rem; flex-wrap: wrap; align-items: center; margin: 0; }
-  .btn { padding: .8rem 1.3rem; color: var(--white); background: var(--brand-blue-logo); text-decoration: none; font-weight: 700; }
-  .btn:hover { background: var(--gray-10); }
-  @media (prefers-color-scheme: dark) { .btn { background: var(--brand-orange-logo); color: var(--black); } .btn:hover { background: var(--white); } }
-  .hero .arrow { color: var(--h-title); }
+  .cta { display: flex; gap: .8rem; flex-wrap: wrap; align-items: center; margin: 0; }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; min-height: 48px; padding: .8rem 1.4rem; color: var(--white); background: var(--brand-blue-logo); text-decoration: none; font-weight: 700; }
+  .btn-alt { color: var(--black); background: var(--brand-orange-logo); }
+  .btn:hover { background: var(--gray-10); color: var(--white); }
+  .btn:focus-visible { outline: 3px solid var(--gray-10); outline-offset: 3px; }
+  @media (prefers-color-scheme: dark) { .btn:hover { background: var(--white); color: var(--black); } .btn:focus-visible { outline-color: var(--white); } }
+  @media (max-width: 520px) { .cta .btn { flex: 1 1 100%; justify-content: center; } }
   .motif { position: relative; }
   .code-block { background: var(--gray-10); color: var(--gray-88); border-top: 8px solid var(--brand-orange-logo); }
   @media (prefers-color-scheme: dark) { .code-block { background: var(--black); } }
