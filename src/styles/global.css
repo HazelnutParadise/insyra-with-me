@@ -60,6 +60,6 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.25; letter-spa
 .code-wrap { position: relative; margin: 1.25rem 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
 .code-wrap pre { margin: 0; padding: 2.2rem 1rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .9rem; line-height: 1.55; }
 .code-bar { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: .25rem .5rem .25rem .8rem; font-size: .75rem; color: var(--muted); border-bottom: 1px solid var(--border); background: var(--surface); z-index: 1; }
-.code-bar .lang { text-transform: uppercase; letter-spacing: .05em; font-weight: 600; color: var(--accent); }
+.code-bar .lang { text-transform: uppercase; letter-spacing: .05em; font-weight: 600; color: var(--link); }
 .copy-btn { font: inherit; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 6px; padding: .15rem .6rem; }
 .copy-btn:hover { border-color: var(--accent); }

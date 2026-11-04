@@ -24,7 +24,7 @@
 | llms.txt | Tim 要決定(選用) | 尚未建立 |
 
 ## Lighthouse 本機實測
-2026-11-05 00:0x(Asia/Taipei),Lighthouse(npx 最新版)對本機 `astro preview` 的 `/posts/sample-install-insyra/`,headless Chrome,預設模擬行動裝置:
-- Performance 100、Accessibility 95、Best Practices 100、SEO 100
+2026-11-05 00:04(Asia/Taipei),Lighthouse(npx 最新版)對本機 `astro preview` 的 `/posts/sample-install-insyra/`,headless Chrome,預設模擬行動裝置:
+- Performance 100、Accessibility 100(首次跑 95,原因是 header 橘字對比不足,已改成橘底黑字;首頁 Accessibility 也是 100)、Best Practices 100、SEO 100
 - LCP 0.8 s、FCP 0.8 s、TBT 0 ms、CLS 0
 - 本機數字不代表正式環境;上線後要用 PageSpeed Insights 與 Search Console 的實際使用者資料再看

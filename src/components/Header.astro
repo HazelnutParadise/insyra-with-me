@@ -20,7 +20,7 @@ const p = Astro.url.pathname;
   .site-header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 3px solid var(--accent); }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: .6rem; padding-bottom: .6rem; }
   .brand { display: flex; align-items: center; gap: .55rem; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--text); text-decoration: none; }
-  .brand em { font-style: normal; color: var(--accent); }
+  .brand em { font-style: normal; background: var(--accent); color: var(--black); padding: 0 .35rem; border-radius: 4px; }
   nav { display: flex; gap: .9rem; flex-wrap: wrap; align-items: center; font-size: .95rem; }
   nav a { color: var(--text); text-decoration: none; } nav a:hover, nav a[aria-current] { color: var(--link); text-decoration: underline; }
   .sep { width: 1px; height: 1.1rem; background: var(--border); }
