@@ -96,10 +96,10 @@ Start from `community-story-template.md`. Use only facts and numbers the person 
 
 ## Sample posts and drafts
 
-- Placeholder or sample posts carry `sample: true` in their frontmatter. All 5 current posts are samples.
-- `npm run dev` and `npm run build` include samples (`INCLUDE_SAMPLES` defaults to true).
-- **`npm run build:prod`** sets `INCLUDE_SAMPLES=false`, which removes samples from pages, category pages, RSS, sitemap and JSON-LD. It then runs `scripts/check-no-samples.mjs`, which fails the build if any sample slug appears anywhere in `dist/`.
+- There are currently no posts in `src/content/posts`. The earlier sample placeholders were removed during launch prep. The home page, posts list and RSS will stay empty until a real post is added.
+- Placeholder posts can still use `sample: true` in frontmatter. They appear in `npm run dev` and `npm run build` (`INCLUDE_SAMPLES` defaults to true) and are excluded from `npm run build:prod`.
+- **`npm run build:prod`** sets `INCLUDE_SAMPLES=false`, which removes samples from pages, category pages, RSS, sitemap and JSON-LD. It then runs `scripts/check-no-samples.mjs`, which fails the build if any sample slug appears anywhere in `dist/`. Use this command for Cloudflare Pages.
 - **Simple alternative:** set `draft: true`. Drafts are never published, in any build.
-- **To publish a real post:** remove `sample: true` (or set it to false) and keep `draft: false`.
+- **To publish a real post:** add a Markdown file under `src/content/posts/en/`, set `draft: false`, and do not set `sample: true`.
 - **Layout previews only:** `SAMPLE_LIMIT=<n> npm run build` keeps just the n newest samples, for checking the 1-post or 2-post layouts. Never ship it.
 - **Categories:** a category appears in the nav, on the home page, as a page and in the sitemap only once it has a published post. You don't need to do anything to enable one.

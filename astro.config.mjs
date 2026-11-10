@@ -5,6 +5,7 @@ import rehypeFigure from './src/lib/rehype-figure.mjs';
 
 export default defineConfig({
   site: SITE_URL,
+  base: '/',
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [sitemap()],

@@ -22,7 +22,7 @@ Neutrals, all of which also appear in insyra-website main `theme.css`: `#FFFFFF`
 
 ## Fonts
 - Body: `Inter, system-ui, Avenir, Helvetica, Arial, sans-serif`, from insyra-website main `frontend/src/style.css` line 2.
-- Headings: `Space Grotesk`, from main `frontend/src/views/HowToUse.vue:198` and `Idensyra.vue:229`.
+- Headings: `Space Grotesk`, from the official site heading styles in `frontend/src/views/HowToUse.vue` (around line 198).
 - Code: `ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`, from main `frontend/src/views/Syralit.vue:337`.
 - The official site's `index.html` loads no web-font link (only Font Awesome 4.7), so Inter and Space Grotesk show only if the visitor has them installed. This blog self-hosts both through `@fontsource-variable/inter` and `@fontsource-variable/space-grotesk`, so they look the same everywhere.
 
