@@ -8,9 +8,11 @@ export const urlOf = (p: Post) => (langOf(p) === 'en' ? `/posts/${slugOf(p)}/` :
 // samples (used to preview sparse layouts; never needed in normal work).
 const env = (typeof process !== 'undefined' ? process.env : {}) as Record<string, string | undefined>;
 export const INCLUDE_SAMPLES = env.INCLUDE_SAMPLES !== 'false';
+// LOCAL drafts-branch preview only. Do not push this branch.
+export const INCLUDE_DRAFTS = env.INCLUDE_DRAFTS !== 'false';
 const SAMPLE_LIMIT = env.SAMPLE_LIMIT !== undefined ? Number(env.SAMPLE_LIMIT) : Infinity;
 export async function getPosts(lang = 'en') {
-  const all = (await getCollection('posts', (p) => langOf(p) === lang && !p.data.draft && (INCLUDE_SAMPLES || !p.data.sample)))
+  const all = (await getCollection('posts', (p) => langOf(p) === lang && (INCLUDE_DRAFTS || !p.data.draft) && (INCLUDE_SAMPLES || !p.data.sample)))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   let samples = 0;
   return all.filter((p) => !p.data.sample || ++samples <= SAMPLE_LIMIT);

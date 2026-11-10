@@ -1,0 +1,60 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import { getPosts, slugOf, readingTime, fmtDate, tagSlug, categoryOf, type Post } from '../../../lib/posts';
+import { SITE, SITE_URL } from '../../../site.config';
+export async function getStaticPaths() {
+  return (await getPosts('zh-tw')).map((post) => ({ params: { slug: slugOf(post) }, props: { post } }));
+}
+const { post } = Astro.props as { post: Post };
+const { Content, headings } = await render(post);
+const d = post.data;
+const cat = categoryOf(d.category);
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = d.cover ? d.cover.src : SITE.defaultOg;
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const ld = [
+  { '@context': 'https://schema.org', '@type': 'BlogPosting', articleSection: cat.name, headline: d.title, description: d.description, url, mainEntityOfPage: url,
+    datePublished: d.pubDate.toISOString(), dateModified: (d.updatedDate ?? d.pubDate).toISOString(), keywords: d.tags.join(', '),
+    image: new URL(ogImage, SITE_URL).href, inLanguage: 'zh-Hant-TW',
+    author: { '@type': 'Person', name: SITE.author },
+    publisher: { '@type': 'Organization', name: SITE.org.name, url: SITE.org.url } },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
+    { '@type': 'ListItem', position: 2, name: cat.name, item: `${SITE_URL}/category/${cat.slug}/` },
+    { '@type': 'ListItem', position: 3, name: d.title, item: url } ] },
+];
+---
+<Base title={d.title} description={d.description} image={ogImage} type="article" jsonLd={ld} lang="zh-Hant-TW"
+  publishedTime={d.pubDate.toISOString()} modifiedTime={d.updatedDate?.toISOString()}>
+  <div class="wrap layout">
+    <article>
+      <nav class="crumbs meta" aria-label="Breadcrumb"><a href="/">Home</a> / <a href={`/category/${cat.slug}/`}>{cat.name}</a></nav>
+      <h1>{d.title}</h1>
+      <p class="meta">By {SITE.author} · <time datetime={d.pubDate.toISOString()}>{fmtDate(d.pubDate)}</time>
+        {d.updatedDate && <> · Updated {fmtDate(d.updatedDate)}</>} · {readingTime(post.body)} min read</p>
+      <div><a class="tag" href={`/category/${cat.slug}/`}>{cat.name}</a>{d.tags.map((t) => <span class="tag">#{t}</span>)}</div>
+      {d.cover && <Image src={d.cover} alt={d.coverAlt ?? ''} class="cover" loading="eager" />}
+      <div class="prose"><Content /></div>
+    </article>
+    {toc.length > 0 && (
+      <aside class="toc" aria-label="Table of contents"><p><strong>On this page</strong></p>
+        <ul>{toc.map((h) => <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>)}</ul></aside>)}
+  </div>
+  <script>
+    for (const h of document.querySelectorAll('.prose h2[id], .prose h3[id]')) {
+      const a = document.createElement('a'); a.href = `#${h.id}`; a.className = 'heading-anchor'; a.textContent = '#';
+      a.setAttribute('aria-label', 'Link to this section'); h.appendChild(a);
+    }
+  </script>
+</Base>
+<style>
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+  @media (min-width: 1100px) { .layout { grid-template-columns: minmax(0, 70ch) 15rem; } .toc { display: block !important; } }
+  .toc { display: none; position: sticky; top: 5rem; align-self: start; font-size: .9rem; border-top: 4px solid var(--text); padding-top: .6rem; }
+  .toc ul { list-style: none; padding: 0; margin: 0; } .toc li { margin: .3rem 0; } .toc .d3 { padding-left: .9rem; }
+  .toc a { color: var(--text); text-decoration: none; } .toc a:hover { color: var(--link); }
+  h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -0.03em; margin: .4rem 0 .6rem; padding-top: .8rem; border-top: 6px solid var(--text); }
+  .cover { width: 100%; height: auto; margin-top: 1rem; }
+</style>

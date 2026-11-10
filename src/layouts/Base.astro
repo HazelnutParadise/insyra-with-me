@@ -5,16 +5,16 @@ import Footer from '../components/Footer.astro';
 import { SITE } from '../site.config';
 interface Props {
   title?: string; description?: string; image?: string; type?: 'website' | 'article';
-  jsonLd?: object | object[]; noindex?: boolean; publishedTime?: string; modifiedTime?: string;
+  jsonLd?: object | object[]; noindex?: boolean; publishedTime?: string; modifiedTime?: string; lang?: string;
 }
-const { title, description = SITE.description, image = SITE.defaultOg, type = 'website', jsonLd, noindex = false, publishedTime, modifiedTime } = Astro.props;
+const { title, description = SITE.description, image = SITE.defaultOg, type = 'website', jsonLd, noindex = true, publishedTime, modifiedTime, lang = SITE.lang } = Astro.props;
 const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name}: ${SITE.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;
 const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 <!doctype html>
-<html lang={SITE.lang}>
+<html lang={lang}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
