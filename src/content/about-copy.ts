@@ -1,37 +1,36 @@
 /**
- * PLACEHOLDER COPY — Social Media Manager will replace this.
+ * About-page copy from Social Media Manager
+ * (/workspace/insyra-with-me-drafts/about.md), verified 2026-11-10
+ * against HazelnutParadise/insyra v0.3.5 (go.mod, README, Docs).
  *
- * This file is the sole source of about-page prose (and the verified
- * example). Replace the strings below with final copy; keep the keys
- * and structure so the page template does not need to change.
- *
- * Drafted 2026-11-10 from the official Insyra README only
- * (https://github.com/HazelnutParadise/insyra, English README.md).
- * Factual wording only — no invented claims.
+ * This file is the sole source of about-page prose and the verified
+ * example. Keep the keys and structure so the page template stays stable.
  */
-
-export const ABOUT_COPY_STATUS =
-  'PLACEHOLDER — Social Media Manager copy will replace this file.';
 
 export const aboutCopy = {
   pageTitle: 'What is Insyra',
   description:
-    'What Insyra is, how to install it, a short verified Go example, and links to the official site, docs, GitHub and pkg.go.dev.',
-  placeholderNotice:
-    'Placeholder copy drafted from the official Insyra README on 2026-11-10. Social Media Manager’s copy will replace the text in src/content/about-copy.ts.',
+    'Insyra is an open-source data analysis library for Go. It gives you DataList and DataTable, plus packages for statistics, charts, machine learning and more, all in plain Go.',
   definitionTitle: 'Definition',
   definition: [
-    'Insyra is a complete data analysis ecosystem for Go, spanning data loading and cleaning, statistics, visualization, machine learning, and deep learning.',
-    'Every layer is checked against a reference implementation: statistics against R, models against scikit-learn, neural networks against PyTorch and onnxruntime. GPU acceleration, parallel processing, Python interop, and a CLI with its own REPL come built in.',
-    'The Insyra library is a tool designed for managing and analyzing data in Go. It offers features for data manipulation, statistical calculations, and data visualization.',
+    'Insyra is an open-source data analysis library for Go. It gives you two core structures, `DataList` for a column of values and `DataTable` for a table, plus packages for statistics, charts, machine learning and more, all in plain Go.',
+    'Insyra started in August 2024 as a way to do the everyday work of data analysis (load a CSV, clean it, add a column, group, summarize, export) without leaving Go. It has grown into a whole ecosystem since then, but the idea is the same: your analysis is ordinary Go code, so it builds, tests and ships like the rest of your Go project. Insyra is MIT-licensed and built by Hazelnut Paradise.',
+  ],
+  whatItsForTitle: "What it's for",
+  whatItsFor: [
+    "**Everyday table work.** Read CSV, JSON, Excel or Parquet into a `DataTable`, then filter, sort, group, pivot, merge and write it back out.",
+    "**Excel-style formulas on columns.** The Column Calculation Language (CCL) lets you write `IF(A > 90, 'Excellent', 'Average')` or `['price'] * ['qty']` to build new columns.",
+    "**Statistics you can check.** The `stats` package covers tests, regressions and more, and the project checks its statistics against R.",
+    "**Charts and reports.** `plot` makes interactive charts (go-echarts) and `gplot` makes static ones (gonum/plot).",
+    "**Models without leaving Go.** `ml` offers scikit-learn-style models and `nn` runs and trains neural networks in pure Go, with no Python runtime and no cgo.",
   ],
   installTitle: 'Install',
   installIntro:
-    'To start using Insyra, install it with the following command, from the official README:',
+    'Insyra v0.3.5 needs Go 1.26 or newer (the `go` directive in `go.mod` is `1.26.9`):',
   installCommand: 'go get github.com/HazelnutParadise/insyra/allpkgs',
-  exampleTitle: 'Example',
+  exampleTitle: 'A first example',
   exampleIntro:
-    'The official README Quick Example, compiled and run against the latest Insyra release (v0.3.5) in a temporary Go module on 2026-11-10. Output below is the real program output, unedited.',
+    'Here is a whole program: put five numbers in a `DataList` and ask for their mean, median and maximum.',
   exampleSource: `package main
 
 import (
@@ -41,21 +40,24 @@ import (
 )
 
 func main() {
-	dl := insyra.NewDataList(1, 2, 3, 4, 5)
-	dl.Append(6)
-	fmt.Println("DataList:", dl.Data())
-	fmt.Println("Mean:", dl.Mean())
+	scores := insyra.NewDataList(72, 88, 95, 64, 81).SetName("scores")
+	fmt.Println("Mean:", scores.Mean())
+	fmt.Println("Median:", scores.Median())
+	fmt.Println("Max:", scores.Max())
 }
 `,
-  exampleOutput: `DataList: [1 2 3 4 5 6]
-Mean: 3.5
+  exampleOutput: `Mean: 80
+Median: 81
+Max: 95
 `,
   exampleVersion: 'v0.3.5',
   linksTitle: 'Links',
   links: [
-    { label: 'GitHub', href: 'https://github.com/HazelnutParadise/insyra' },
+    { label: 'GitHub repository', href: 'https://github.com/HazelnutParadise/insyra' },
     { label: 'Documentation', href: 'https://hazelnutparadise.github.io/insyra/' },
-    { label: 'Official site', href: 'https://insyra.hazelnut-paradise.com' },
-    { label: 'pkg.go.dev', href: 'https://pkg.go.dev/github.com/HazelnutParadise/insyra' },
+    { label: 'Go package reference (pkg.go.dev)', href: 'https://pkg.go.dev/github.com/HazelnutParadise/insyra' },
+    { label: 'Release notes', href: 'https://github.com/HazelnutParadise/insyra/releases' },
+    { label: 'Official website', href: 'https://insyra.hazelnut-paradise.com' },
+    { label: 'Tim Lai, creator of Insyra, on X', href: 'https://x.com/TimLai666' },
   ],
 } as const;

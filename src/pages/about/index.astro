@@ -25,27 +25,36 @@ const jsonLd = [
     ],
   },
 ];
+
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+const inlineMd = (s: string) =>
+  escapeHtml(s)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
 ---
 <Base title={aboutCopy.pageTitle} description={aboutCopy.description} jsonLd={jsonLd}>
   <div class="wrap">
     <header class="page-head">
       <h1>{aboutCopy.pageTitle}</h1>
-      <p class="meta">{aboutCopy.description}</p>
     </header>
     <article class="prose about-page">
-      <p class="placeholder-note">{aboutCopy.placeholderNotice}</p>
+      {aboutCopy.definition.map((p) => <p set:html={inlineMd(p)} />)}
       <section>
-        <h2>{aboutCopy.definitionTitle}</h2>
-        {aboutCopy.definition.map((p) => <p>{p}</p>)}
+        <h2>{aboutCopy.whatItsForTitle}</h2>
+        <ul>
+          {aboutCopy.whatItsFor.map((item) => <li set:html={inlineMd(item)} />)}
+        </ul>
       </section>
       <section>
         <h2>{aboutCopy.installTitle}</h2>
-        <p>{aboutCopy.installIntro}</p>
+        <p set:html={inlineMd(aboutCopy.installIntro)} />
         <pre class="plain-code"><code>{aboutCopy.installCommand}</code></pre>
       </section>
       <section>
         <h2>{aboutCopy.exampleTitle}</h2>
-        <p>{aboutCopy.exampleIntro}</p>
+        <p set:html={inlineMd(aboutCopy.exampleIntro)} />
         <pre class="plain-code" data-language="go"><code>{aboutCopy.exampleSource}</code></pre>
         <h3>Output</h3>
         <pre class="plain-code"><code>{aboutCopy.exampleOutput}</code></pre>
@@ -62,7 +71,6 @@ const jsonLd = [
   </div>
 </Base>
 <style>
-  .placeholder-note { color: var(--muted); font-size: .9rem; margin: 0 0 1.5rem; }
   .about-page pre.plain-code {
     overflow: auto;
     padding: 1rem 1.1rem;
