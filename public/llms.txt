@@ -1,0 +1,20 @@
+# Insyra With Me
+
+> Community blog for Insyra, a Go data analysis ecosystem. Guides, stories and news from the Insyra community.
+
+This site is https://insyra.me. It is the community blog (Insyra With Me), not the official Insyra documentation.
+
+## Official Insyra
+
+- Official site: https://insyra.hazelnut-paradise.com
+- Documentation: https://hazelnutparadise.github.io/insyra/
+- Source and README: https://github.com/HazelnutParadise/insyra
+- Go package: https://pkg.go.dev/github.com/HazelnutParadise/insyra
+
+## This site
+
+- Home: https://insyra.me/
+- About / What is Insyra: https://insyra.me/about/
+- Posts: https://insyra.me/posts/
+- RSS: https://insyra.me/rss.xml
+- Sitemap: https://insyra.me/sitemap-index.xml
