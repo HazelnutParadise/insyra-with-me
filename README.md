@@ -1,11 +1,27 @@
 # Insyra With Me
 
-The Insyra community blog (Astro, static). `npm install`, then `npm run dev`. Docs: DESIGN.md, CONTENT-GUIDE.md, SEO-CHECKLIST.md, DEPLOY.md.
+Community blog for [Insyra](https://insyra.hazelnut-paradise.com), the Go data analysis library. The production site is [insyra.me](https://insyra.me).
 
-The planned public URL is `https://insyra.me` (site constant in `src/site.config.ts`). The site is not live yet.
+## Stack
 
-## Builds
+Astro (static site), TypeScript, Markdown content collections.
 
-- `npm run build`: local/dev build. Sample posts (`sample: true`) are included if any exist.
-- `npm run build:prod`: production build (`INCLUDE_SAMPLES=false`) plus a check that fails if any sample would be published. This is the Cloudflare Pages build command.
-- There are currently no posts in the repo (sample placeholders were removed before launch prep). Add a real post with `draft: false` and no `sample: true`. See CONTENT-GUIDE.md.
+## Build
+
+```sh
+npm install
+npm run dev          # local preview
+npm run build:prod   # production build (excludes sample posts)
+```
+
+Output directory: `dist/`.
+
+## Deploy
+
+[Cloudflare Pages](https://developers.cloudflare.com/pages/). Recommended settings:
+
+- Build command: `npm run build:prod`
+- Output directory: `dist`
+- Environment: `NODE_VERSION=24`
+
+See DEPLOY.md for the full launch notes.
