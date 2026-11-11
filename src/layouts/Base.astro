@@ -7,10 +7,21 @@ interface Props {
   title?: string; description?: string; image?: string; type?: 'website' | 'article';
   jsonLd?: object | object[]; noindex?: boolean; publishedTime?: string; modifiedTime?: string; lang?: string;
 }
-const { title, description = SITE.description, image = SITE.defaultOg, type = 'website', jsonLd, noindex = true, publishedTime, modifiedTime, lang = SITE.lang } = Astro.props;
+const { title, description = SITE.description, image = SITE.defaultOg, type = 'website', jsonLd, noindex = false, publishedTime, modifiedTime, lang = SITE.lang } = Astro.props;
 const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name}: ${SITE.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;
+// hreflang pairs: every /posts/... page has a /zh-tw/posts/... twin and vice versa.
+const path = Astro.url.pathname;
+const enPath = path.startsWith('/zh-tw/posts') ? path.slice('/zh-tw'.length) : path.startsWith('/posts') ? path : null;
+const alternates = enPath ? [
+  { hreflang: 'en', href: new URL(enPath, Astro.site).href },
+  { hreflang: 'zh-Hant-TW', href: new URL('/zh-tw' + enPath, Astro.site).href },
+  { hreflang: 'x-default', href: new URL(enPath, Astro.site).href },
+] : [];
+const isZh = lang.startsWith('zh');
+const ogLocale = isZh ? 'zh_TW' : 'en_US';
+const ogLocaleAlt = enPath ? (isZh ? 'en_US' : 'zh_TW') : null;
 const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 <!doctype html>
@@ -21,6 +32,7 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
+  {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
   {noindex && <meta name="robots" content="noindex" />}
   <link rel="icon" type="image/png" href="/logo-icon.png" />
   <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
@@ -32,7 +44,8 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={ogImage} />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale" content={ogLocale} />
+  {ogLocaleAlt && <meta property="og:locale:alternate" content={ogLocaleAlt} />}
   {publishedTime && <meta property="article:published_time" content={publishedTime} />}
   {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
   <meta name="twitter:card" content="summary_large_image" />

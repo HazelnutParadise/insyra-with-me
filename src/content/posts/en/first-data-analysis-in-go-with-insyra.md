@@ -4,7 +4,6 @@ description: "Load a CSV, add a calculated column, group and sort, and save the 
 pubDate: 2026-11-11
 category: guides
 tags: ["getting-started", "datatable", "csv", "ccl", "groupby"]
-draft: true
 ---
 
 ## Goal

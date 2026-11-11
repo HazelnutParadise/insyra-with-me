@@ -1,10 +1,9 @@
 ---
 title: "我為什麼要做 Insyra，一個 Go 的「Pandas」"
 description: "Insyra 為什麼存在、「Go 的 Pandas」是什麼意思又不是什麼意思，還有同一個分析用 pandas 和 Insyra 寫的對照。"
-pubDate: 2026-11-12
+pubDate: 2026-11-11
 category: community
 tags: ["insyra", "pandas", "go", "data-analysis"]
-draft: true
 ---
 
 ## 先講結論
@@ -15,7 +14,6 @@ draft: true
 
 ## 一直卡著的那件事
 
-<!-- TIM: 請確認這段是你真正的理由，或用你自己的話改寫。依據 queue.md 裡你之前的回覆草稿。 -->
 很多分析不會一直待在 notebook 裡。它會被某個服務呼叫、被 AI agent 呼叫，或變成別人要用的應用程式。走到這一步的時候，我希望它是 Go：一個執行檔，不用再帶著一整套 Python 環境一起出貨。
 
 而且老實說，我很懶（問誰都知道）。我不想用一種語言寫完分析，為了上線又用另一種語言再寫一次。

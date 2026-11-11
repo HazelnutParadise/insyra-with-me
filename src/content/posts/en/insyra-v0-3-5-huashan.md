@@ -1,10 +1,9 @@
 ---
 title: "Insyra v0.3.5 \"Huashan\": what's new"
 description: "Insyra v0.3.5 brings GPU training steps, a new quant/ta package, I/O without files on disk, Excel export, and requires Go 1.26."
-pubDate: 2026-11-13
+pubDate: 2026-11-11
 category: releases
 tags: ["release", "v0.3.5", "excel", "csv", "quant", "gpu"]
-draft: true
 ---
 
 Insyra v0.3.5, still on the "Huashan" 0.3.x line, was released on October 24, 2026. Here's the part I'd want to know if I were upgrading. Everything below comes from the [v0.3.5 release notes](https://github.com/HazelnutParadise/insyra/releases/tag/v0.3.5) and the [changelog](https://github.com/HazelnutParadise/insyra/blob/main/CHANGELOG.md#v035).

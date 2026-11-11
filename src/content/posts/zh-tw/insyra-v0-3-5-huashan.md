@@ -1,10 +1,9 @@
 ---
 title: "Insyra v0.3.5「Huashan」：有什麼新東西"
 description: "Insyra v0.3.5 帶來留在 GPU 上的訓練步驟、新的 quant/ta 套件、不需要磁碟檔案的讀寫、Excel 匯出，並且需要 Go 1.26。"
-pubDate: 2026-11-13
+pubDate: 2026-11-11
 category: releases
 tags: ["release", "v0.3.5", "excel", "csv", "quant", "gpu"]
-draft: true
 ---
 
 Insyra v0.3.5 在 2026 年 10 月 24 日釋出，還是「Huashan」0.3.x 這條線。下面是如果我要升級，會想先知道的部分。內容全部來自 [v0.3.5 釋出說明](https://github.com/HazelnutParadise/insyra/releases/tag/v0.3.5)和[變更紀錄](https://github.com/HazelnutParadise/insyra/blob/main/CHANGELOG_TW.md)。

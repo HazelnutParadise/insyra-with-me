@@ -1,10 +1,9 @@
 ---
 title: "Why I built Insyra, a \"Pandas\" for Go"
 description: "Why Insyra exists, what \"a Pandas for Go\" does and doesn't mean, and the same analysis in pandas and in Insyra side by side."
-pubDate: 2026-11-12
+pubDate: 2026-11-11
 category: community
 tags: ["insyra", "pandas", "go", "data-analysis"]
-draft: true
 ---
 
 ## The short version
@@ -15,7 +14,6 @@ I opened the repo on August 29, 2024. This is why.
 
 ## The itch
 
-<!-- TIM: confirm this section is your real reason, or rewrite it in your words. Based on your earlier reply draft in queue.md. -->
 A lot of analysis doesn't stay in a notebook. It gets called by a service, or an AI agent, or it turns into an app other people run. That's the point where I wanted it to be Go: one binary, no Python environment to ship along with it.
 
 And honestly, I'm lazy (ask anyone). I didn't want to write the analysis in one language and then write it again in another to ship it.

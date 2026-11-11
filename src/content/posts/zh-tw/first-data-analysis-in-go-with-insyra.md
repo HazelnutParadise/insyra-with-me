@@ -4,7 +4,6 @@ description: "讀入 CSV、加一個計算欄位、分組加總再排序、把�
 pubDate: 2026-11-11
 category: guides
 tags: ["getting-started", "datatable", "csv", "ccl", "groupby"]
-draft: true
 ---
 
 ## 目標
