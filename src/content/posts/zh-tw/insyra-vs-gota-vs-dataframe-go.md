@@ -40,7 +40,7 @@ draft: false
 
 目前最新版是 2026 年 10 月 24 日的 v0.3.5「Huashan」，MIT 授權。README 有老實寫它還在快速演進，所以用的時候，請以你那個版本的文件為準。
 
-## Golang dataframe 函式庫，一張表看完
+## 先看這張對照表
 
 ✅ 表示專案的 README 或文件裡有寫到。「說明裡沒寫」是我在那裡找不到，不代表它做不到。
 
@@ -61,7 +61,7 @@ draft: false
 | 機器學習 | 說明裡沒寫 | 說明裡沒寫 | 說明裡沒寫 | 說明裡沒寫 | ✅（`ml`） |
 | 神經網路 | 說明裡沒寫 | 說明裡沒寫 | 說明裡沒寫 | 說明裡沒寫 | ✅（`nn`） |
 
-## 這些情況，用別人的比較好
+## 什麼時候用別家比較好
 
 我寧可你挑對工具，也不要你硬用我的：
 
@@ -70,7 +70,7 @@ draft: false
 - **手上已經有跑得好好的 Gota 程式。** 封存不代表壞了，只是下次壞掉的時候不會有人修。要是開新專案，我會挑還有人在維護的。
 - **需要 dataframe-go 的預測或內插。** README 裡都有。記得照它自己的建議，鎖定一個 commit。
 
-## 資料表之後，Insyra 還能接著做什麼
+## 過了資料表還能做什麼
 
 這段才是我最在意的。用「Go 的 pandas 加 scikit-learn」來當短介紹沒問題，不過資料表只是起點。後面的統計、圖表、機器學習、神經網路，都在同一個 module 裡接著做就好，要用哪個套件再匯入哪個。
 
@@ -130,7 +130,7 @@ model, err := nn.NewSequential(tape,
 
 還有很多沒寫進來：Parquet 串流、CCL 欄位公式、附 REPL 的 CLI，還有真的非用 Python 不可時可以用的 `py` 套件。這些全都在[文件](https://hazelnutparadise.github.io/insyra/)裡。
 
-## Insyra 和 gpandas 不是對手，是隊友
+## Insyra 跟 gpandas 可以一起用
 
 Insyra 有個 `pd` 套件，就是包在 gpandas 外面薄薄的一層（Insyra 現在的 `go.mod` 用的是 v0.6.0）。它可以把 Insyra 的 `DataTable` 轉成 gpandas 的 `DataFrame`，也能再轉回來，欄位順序和列名稱都會留著。手上已經有 gpandas 物件的話，用 `FromGPandasDataFrame` 和 `FromGPandasSeries` 包一下就好。
 
