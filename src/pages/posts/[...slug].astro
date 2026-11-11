@@ -33,7 +33,7 @@ const ld = [
       <nav class="crumbs meta" aria-label="Breadcrumb"><a href="/">Home</a> / <a href={`/category/${cat.slug}/`}>{cat.name}</a></nav>
       <h1>{d.title}</h1>
       <p class="meta">By {SITE.author} · <time datetime={d.pubDate.toISOString()}>{fmtDate(d.pubDate)}</time>
-        {d.updatedDate && <> · Updated {fmtDate(d.updatedDate)}</>} · {readingTime(post.body)} min read</p>
+        {d.updatedDate && <> · Updated {fmtDate(d.updatedDate)}</>} · {readingTime(post.body)} min read · <a href={`/zh-tw/posts/${slugOf(post)}/`} hreflang="zh-Hant-TW" lang="zh-Hant-TW">閱讀中文版</a></p>
       <div><a class="tag" href={`/category/${cat.slug}/`}>{cat.name}</a>{d.tags.map((t) => <span class="tag">#{t}</span>)}</div>
       {d.cover && <Image src={d.cover} alt={d.coverAlt ?? ''} class="cover" loading="eager" />}
       <div class="prose"><Content /></div>
