@@ -20,7 +20,7 @@ draft: false
 
 文中寫到的東西，我都在 2026 年 11 月 12 日一個一個對過各專案的儲存庫和 README。這篇沒有效能比較：我沒跑過公平的測試，隨便生一張圖出來，對誰都沒好處。
 
-## 這次比的五套
+## 先認識這五套函式庫
 
 **[Gota](https://github.com/go-gota/gota)** 大概是 Go 最有名的 DataFrame 函式庫，GitHub 上約 3.3k 顆星。DataFrame、Series 都有，能讀 CSV 和 JSON，篩選、`GroupBy` 加彙總、用 `Arrange` 排序、join 都做得到，也能跟 gonum 的矩陣互轉。
 
@@ -40,7 +40,7 @@ draft: false
 
 目前最新版是 2026 年 10 月 24 日的 v0.3.5「Huashan」，MIT 授權。README 有老實寫它還在快速演進，所以用的時候，請以你那個版本的文件為準。
 
-## 先看這張對照表
+## Go 的 dataframe 函式庫對照表
 
 ✅ 表示專案的 README 或文件裡有寫到。「說明裡沒寫」是我在那裡找不到，不代表它做不到。
 
