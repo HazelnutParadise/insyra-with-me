@@ -1,0 +1,9 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getPosts } from '../../../lib/posts';
+const posts = await getPosts('zh-tw');
+---
+<Base title="所有文章" description="Insyra With Me 上的中文文章預覽。" lang="zh-Hant-TW">
+  <div class="wrap"><header class="page-head"><h1>所有文章</h1><p class="meta">草稿預覽（繁體中文）。</p></header>{posts.length ? <ul class="card-list">{posts.map((p) => <PostCard post={p} />)}</ul> : <p class="arrow-row">目前沒有文章。</p>}</div>
+</Base>

@@ -243,18 +243,14 @@ h2.sec { display: flex; align-items: baseline; gap: 1rem; font-size: clamp(1.6re
   color: var(--text);
 }
 
-/* Code blocks: full-bleed-ish colour block + top rule (label lives on .code-bar) */
+/* Code blocks: full-bleed-ish colour block, no top rule (label lives on .code-bar) */
 .code-wrap {
   position: relative;
   margin: 1.7rem -0.85rem;
-  border-top: 6px solid var(--brand-blue-logo);
   background: var(--surface);
 }
 @media (min-width: 720px) {
   .code-wrap { margin-left: -1.25rem; margin-right: -1.25rem; }
-}
-@media (prefers-color-scheme: dark) {
-  .code-wrap { border-top-color: var(--brand-orange-logo); }
 }
 .code-wrap pre {
   margin: 0;
@@ -303,14 +299,10 @@ h2.sec { display: flex; align-items: baseline; gap: 1rem; font-size: clamp(1.6re
   overflow-x: auto;
   background: var(--surface);
   border: 0;
-  border-top: 6px solid var(--brand-blue-logo);
   color: var(--text);
   font-family: var(--font-mono);
   font-size: 0.95rem;
   line-height: 1.65;
-}
-@media (prefers-color-scheme: dark) {
-  .prose pre.plain-code { border-top-color: var(--brand-orange-logo); }
 }
 
 /* Shiki dual theme */
