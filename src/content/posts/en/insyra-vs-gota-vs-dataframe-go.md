@@ -59,7 +59,7 @@ I'd rather you pick the right tool than pick mine:
 
 ## What Insyra does beyond the DataFrame
 
-This is the part I care about, and why I don't describe Insyra as "pandas plus scikit-learn, but in Go." The table is only the start. The same module covers the next steps, and each step is its own package, so you import only what you use.
+This is the part I care about most. Calling it Go's answer to pandas + scikit-learn is a fair shorthand, but the table is only the start. From there, the same module can keep going into stats, charts, machine learning, and neural nets, and you only import the packages you actually use.
 
 All snippets below were built against `github.com/HazelnutParadise/insyra@v0.3.5` with Go 1.27.3, and they also build with `CGO_ENABLED=0`.
 

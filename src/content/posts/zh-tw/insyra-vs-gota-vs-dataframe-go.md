@@ -72,7 +72,7 @@ draft: false
 
 ## 資料表之後，Insyra 還能接著做什麼
 
-這段是我最在意的，也是我不想把 Insyra 講成「Go 版 pandas 加 scikit-learn」的原因。資料表只是起點，後面的步驟在同一個 module 裡就能接著做。每一步都是獨立套件，要用什麼再匯入什麼。
+這段才是我最在意的。用「Go 的 pandas 加 scikit-learn」來當短介紹沒問題，不過資料表只是起點。後面的統計、圖表、機器學習、神經網路，都在同一個 module 裡接著做就好，要用哪個套件再匯入哪個。
 
 下面的程式碼都用 `github.com/HazelnutParadise/insyra@v0.3.5` 和 Go 1.27.3 編譯過，設 `CGO_ENABLED=0` 也編得過。
 
