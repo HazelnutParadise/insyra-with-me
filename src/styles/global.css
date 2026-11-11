@@ -34,7 +34,7 @@ body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; }
 main { flex: 1; }
 a { color: var(--link); text-underline-offset: 3px; }
 h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.25; letter-spacing: -0.01em; }
-.wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem; }
+.wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem; min-width: 0; }
 .tag { display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text); margin: 0 1rem .3rem 0; }
 a.tag { color: var(--link); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .meta { color: var(--muted); font-size: .9rem; }
@@ -55,6 +55,7 @@ h2.sec { display: flex; align-items: baseline; gap: 1rem; font-size: clamp(1.6re
 /* Article */
 .prose {
   max-width: 70ch;
+  min-width: 0;
   font-size: 1.08rem;
   line-height: 1.75;
 }
@@ -316,13 +317,26 @@ h2.sec { display: flex; align-items: baseline; gap: 1rem; font-size: clamp(1.6re
   .astro-code, .astro-code span { color: var(--shiki-dark); background-color: var(--shiki-dark-bg); }
 }
 
-/* Tables: header colour block, zebra rows, rule footer */
+/* Tables: header colour block, zebra rows, rule footer.
+   Wide tables scroll inside .table-scroll; the page width stays in bounds. */
+.prose .table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  max-width: 100%;
+  margin: 1.5em 0;
+}
 .prose table {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5em 0;
   font-size: 0.95em;
   line-height: 1.5;
+}
+.prose .table-scroll table {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
 }
 .prose thead th {
   background: var(--brand-blue-logo);
