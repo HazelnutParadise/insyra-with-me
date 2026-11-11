@@ -5,5 +5,5 @@ import { getPosts } from '../../../lib/posts';
 const posts = await getPosts('zh-tw');
 ---
 <Base title="所有文章" description="Insyra With Me 的繁體中文文章：Insyra 教學、使用案例、社群故事與版本消息。" lang="zh-Hant-TW">
-  <div class="wrap"><header class="page-head"><h1>所有文章</h1><p class="meta">繁體中文版文章。</p></header>{posts.length ? <ul class="card-list">{posts.map((p) => <PostCard post={p} />)}</ul> : <p class="arrow-row">目前沒有文章。</p>}</div>
+  <div class="wrap"><header class="page-head"><h1>所有文章</h1><p class="meta">繁體中文版文章。 · <a href="/posts/" hreflang="en" lang="en">Read in English</a></p></header>{posts.length ? <ul class="card-list">{posts.map((p) => <PostCard post={p} />)}</ul> : <p class="arrow-row">目前沒有文章。</p>}</div>
 </Base>
