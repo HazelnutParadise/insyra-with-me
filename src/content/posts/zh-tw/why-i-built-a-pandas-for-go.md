@@ -52,7 +52,7 @@ byRegion.Show()
 
 對，Go 版比較長。它就是 Go。換來的是有名字的欄位而不是關鍵字魔法、一個你沒辦法假裝沒看到的 `err`，還有一個會比你的資料更早抱怨的編譯器。（想寫短一點的話，`isr` 套件就是為了這個做的語法糖。）
 
-可以直接執行的完整版本和真實輸出，在[用 Insyra 在 Go 裡做第一次資料分析](/posts/first-data-analysis-in-go-with-insyra/)。
+可以直接執行的完整版本和真實輸出，在[用 Insyra 在 Go 裡做第一次資料分析](/zh-tw/posts/first-data-analysis-in-go-with-insyra/)。
 
 ## 「Go 的 Pandas」實際上是什麼
 
