@@ -3,13 +3,17 @@ import { SITE } from '../site.config';
 import { activeCategories } from '../lib/posts';
 const cats = await activeCategories();
 const p = Astro.url.pathname;
+const isZh = p.startsWith('/zh-tw');
+// Posts exist in both languages at /posts/x/ and /zh-tw/posts/x/; other pages are English-only.
+const langHref = isZh ? p.slice('/zh-tw'.length) : p.startsWith('/posts') ? '/zh-tw' + p : '/zh-tw/posts/';
 ---
 <header class="site-header">
   <div class="wrap bar">
     <a class="brand" href="/"><img src="/logo-icon.png" alt="" width="32" height="32" /><span>Insyra <em>With Me</em></span></a>
     <nav aria-label="External" class="ext">
       <a href="/about/" aria-current={p.startsWith('/about') ? 'page' : undefined}>About</a>
-      <a href="/posts/" aria-current={p.startsWith('/posts') ? 'page' : undefined}>All posts</a>
+      <a href={isZh ? '/zh-tw/posts/' : '/posts/'} aria-current={p.startsWith('/posts') || p.startsWith('/zh-tw/posts') ? 'page' : undefined}>{isZh ? '所有文章' : 'All posts'}</a>
+      <a href={langHref} hreflang={isZh ? 'en' : 'zh-Hant-TW'} lang={isZh ? 'en' : 'zh-Hant-TW'}>{isZh ? 'English' : '中文'}</a>
       <a href="/rss.xml">RSS</a><span class="sep" aria-hidden="true"></span>
       <a href={SITE.links.site} rel="noopener">Official site</a>
       <a href={SITE.links.docs} rel="noopener">Docs</a>
