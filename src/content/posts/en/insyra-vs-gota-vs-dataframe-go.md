@@ -158,4 +158,4 @@ If you want to see Insyra on a real (tiny) dataset first, [How to do your first 
 go get github.com/HazelnutParadise/insyra/allpkgs
 ```
 
-Repo: https://github.com/HazelnutParadise/insyra · Docs: https://hazelnutparadise.github.io/insyra/ · If I got something wrong about any of these libraries, tell me on X ([@TimLai666](https://x.com/TimLai666)) and I'll fix it.
+Repo: https://github.com/HazelnutParadise/insyra · Docs: https://hazelnutparadise.github.io/insyra/ · If I got something wrong about any of these libraries, [open an issue](https://github.com/HazelnutParadise/insyra/issues) and I'll fix it.
