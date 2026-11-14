@@ -5,6 +5,7 @@ pubDate: 2026-11-14
 category: guides
 tags: ["comparison", "dataframe", "pandas", "gota", "dataframe-go", "qframe", "gpandas"]
 draft: false
+faq: [{"q": "Go 有哪些 pandas 替代方案？該選哪個？", "a": "只需要一個快、不可變的資料表來篩選、分組，qframe 就很夠用。想要 API 長得最像 pandas，去看 gpandas（Insyra 也能跟它互轉）。分析不會停在資料表，後面還要接統計、畫圖、模型、神經網路，這就是我做 Insyra 想解決的事。Gota 和 dataframe-go 對 Go 的資料處理幫助很大，不過要拿來開新專案，先看一下下面寫的專案狀態。"}, {"q": "Gota 還有人維護嗎？", "a": "不過這個儲存庫在 GitHub 上已經封存，變成唯讀了。最後一版是 2021 年 10 月的 v0.12.0，README 也寫著 API 還在變動，「使用風險自負」。"}, {"q": "dataframe-go 還有人維護嗎？", "a": "它沒有封存，但最後一次 commit 停在 2021 年 10 月，而且一個標記版本都沒有。README 也提醒 API 還不穩定，建議鎖定某個 commit 來用。"}, {"q": "哪一套 Go dataframe 函式庫最像 pandas？", "a": "gpandas 是裡面最新、也最有 pandas 味的一套。gpandas 刻意跟著 pandas 的命名和行為走（Loc、iLoc、merge 的 _x／_y 後綴、ddof=1 的標準差）。"}, {"q": "Insyra 除了資料表還能做什麼？", "a": "用「Go 的 pandas 加 scikit-learn」來當短介紹沒問題，不過資料表只是起點。後面的統計、圖表、機器學習、神經網路，都在同一個 module 裡接著做就好，要用哪個套件再匯入哪個。"}, {"q": "Insyra 和 gpandas 可以一起用嗎？", "a": "Insyra 有個 pd 套件，就是包在 gpandas 外面薄薄的一層（Insyra 現在的 go.mod 用的是 v0.6.0）。它可以把 Insyra 的 DataTable 轉成 gpandas 的 DataFrame，也能再轉回來，欄位順序和列名稱都會留著。所以不用二選一。喜歡 gpandas 那套 pandas 風格的 API，那部分就用它寫；要跑 stats、plot 或 ml 的時候，再轉回 DataTable。"}]
 ---
 
 ## 先講結論

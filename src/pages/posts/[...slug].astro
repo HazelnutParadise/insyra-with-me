@@ -25,6 +25,7 @@ const ld = [
     { '@type': 'ListItem', position: 2, name: cat.name, item: `${SITE_URL}/category/${cat.slug}/` },
     { '@type': 'ListItem', position: 3, name: d.title, item: url } ] },
 ];
+if (d.faq?.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
 ---
 <Base title={d.title} description={d.description} image={ogImage} type="article" jsonLd={ld}
   publishedTime={d.pubDate.toISOString()} modifiedTime={d.updatedDate?.toISOString()}>
