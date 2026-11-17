@@ -1,10 +1,10 @@
 ---
 title: "Can you do data analysis in Go? An honest FAQ"
-description: "Yes, you can do data analysis in Golang. What Gonum, Gota, dataframe-go and Insyra each cover, which golang dataframe library is maintained, and when to stay in Python."
+description: "Yes, you can do data analysis in Golang. What Gonum, Gota, dataframe-go and Insyra each cover, which golang dataframe library is maintained, and how to call pandas when you need it."
 pubDate: 2026-11-18
 category: guides
 tags: ["faq", "data-analysis", "golang", "dataframe", "pandas", "gonum", "gota", "dataframe-go"]
-faq: [{"q": "Can you do data analysis in Go?", "a": "Yes. Data analysis in Golang is real, and you can do the whole loop in Go: load a CSV or an Excel sheet, clean it, group it, run a test or a regression, draw a chart, and ship it all as one binary. The honest part: Go's data ecosystem is smaller than Python's, and the tools are spread across a few libraries instead of one obvious stack. So the useful question isn't \"can I\", it's \"which library does which part\". That's what this FAQ answers. I build one of these libraries (Insyra), so keep that in mind, and I've tried to be fair to the others. Everything about other projects below comes from their own GitHub repos and READMEs, checked on November 17, 2026."}, {"q": "What's the best Go library for data analysis?", "a": "There's no single winner, because they don't all do the same job. If you only need math on numbers, Gonum is hard to beat. If you need a table and the analysis after it, that's the gap Insyra was built for."}, {"q": "Is there a pandas alternative for Golang?", "a": "Kind of, and it depends on what \"pandas\" means to you. If you mean \"a DataFrame with pandas-style names\", look at Gota, dataframe-go and gpandas. If you mean \"the thing I open to load, clean, summarize and model data\", that's closer to what I aim for with Insyra. It isn't a pandas port and doesn't copy the API. It does the same job, the Go way. I wrote more about that in why I built a \"Pandas\" for Go."}, {"q": "Which golang dataframe library should I use?", "a": "For something new in 2026, I'd start with a library that's still maintained and has releases you can pin to a version. Archived doesn't mean broken, so existing Gota code that works can keep working. Nobody will fix what breaks next, though."}, {"q": "Can Go read an Excel file into a DataFrame?", "a": "Yes. The go-to Go library for Excel files is Excelize, and Insyra uses it under the hood too. With Gota you read rows with Excelize yourself and pass them to dataframe.LoadRecords. dataframe-go lists Excel as an export format. In Insyra it's one call: insyra.ReadExcelSheet(\"sales.xlsx\", \"2026\", false, true) reads a sheet into a DataTable, and dt.ToExcel(\"report.xlsx\", insyra.ExcelWriteOptions{Sheet: \"2026\", SetColNamesToFirstRow: true}) writes one back (new in v0.3.5). One heads-up for v0.3.5: cells read from Excel come in as strings (I checked with a round trip), so convert numeric columns before you do math on them."}, {"q": "Can you do statistics and charts in Go, not just tables?", "a": "Yes, and this is where the libraries split the most. Statistics: Gonum's stat package covers the basics (mean, variance, correlation, regression, distributions). Insyra's stats adds hypothesis tests, ANOVA, regressions, PCA and more on top of DataList, and its README says the statistics are checked against R. Charts: gonum/plot makes static charts, and go-echarts makes interactive HTML ones. Insyra wraps both: gplot on gonum/plot, plot on go-echarts. Models: Insyra has ml (scikit-learn-style models) and nn (neural networks), and the README says both run with no Python runtime and no cgo."}, {"q": "When should you stay in Python?", "a": "You live in notebooks. Jupyter + pandas for poking at data interactively is still the smoothest experience out there. Go is better once the analysis turns into a program. You need one specific Python library. Some models and domain packages only exist in Python. (Insyra's py package can run Python code from Go and pass variables both ways, if you need a bridge.) Your team already shares pandas code. Switching languages for a working pipeline is rarely worth it. Go makes the most sense when the analysis lives inside a Go service or CLI, when you want one binary with no Python environment to manage, or when you simply like Go and want to keep thinking in Go."}]
+faq: [{"q": "Can you do data analysis in Go?", "a": "Yes. Data analysis in Golang is real, and you can do the whole loop in Go: load a CSV or an Excel sheet, clean it, group it, run a test or a regression, draw a chart, and ship it all as one binary."}, {"q": "What's the best Go library for data analysis?", "a": "There's no single winner, because they don't all do the same job. If you only need math on numbers, Gonum is hard to beat. If you need a table and the analysis after it, that's the gap Insyra was built for."}, {"q": "Is there a pandas alternative for Golang?", "a": "Kind of, and it depends on what \"pandas\" means to you. If you mean \"a DataFrame with pandas-style names\", look at Gota, dataframe-go and gpandas. If you mean \"the thing I open to load, clean, summarize and model data\", that's closer to what I aim for with Insyra. It isn't a pandas port and doesn't copy the API. It does the same job, the Go way. I wrote more about that in why I built a \"Pandas\" for Go."}, {"q": "Which golang dataframe library should I use?", "a": "For something new in 2026, I'd start with a library that's still maintained and has releases you can pin to a version. Archived doesn't mean broken, so existing Gota code that works can keep working. Nobody will fix what breaks next, though."}, {"q": "Can Go read an Excel file into a DataFrame?", "a": "Yes. The go-to Go library for Excel files is Excelize, and Insyra uses it under the hood too. With Gota you read rows with Excelize yourself and pass them to dataframe.LoadRecords. dataframe-go lists Excel as an export format. In Insyra it's one call: insyra.ReadExcelSheet(\"sales.xlsx\", \"2026\", false, true) reads a sheet into a DataTable, and dt.ToExcel(\"report.xlsx\", insyra.ExcelWriteOptions{Sheet: \"2026\", SetColNamesToFirstRow: true}) writes one back (new in v0.3.5). One heads-up for v0.3.5: cells read from Excel come in as strings (I checked with a round trip), so convert numeric columns before you do math on them."}, {"q": "Can you do statistics and charts in Go, not just tables?", "a": "Yes, and this is where the libraries split the most. Statistics: Gonum's stat package covers the basics (mean, variance, correlation, regression, distributions). Insyra's stats adds hypothesis tests, ANOVA, regressions, PCA and more on top of DataList, and its README says the statistics are checked against R. Charts: gonum/plot makes static charts, and go-echarts makes interactive HTML ones. Insyra wraps both: gplot on gonum/plot, plot on go-echarts. Models: Insyra has ml (scikit-learn-style models) and nn (neural networks), and the README says both run with no Python runtime and no cgo."}, {"q": "What if I still need Python, pandas or polars?", "a": "Then don't pick a side. Keep Go as the main flow and call Python for the one step that needs it. Insyra connects to it directly, in two ways: py: real Python, called from Go. py.RunCodef runs Python code and fills $v1, $v2, … with your Go values. A DataTable arrives as a pandas.DataFrame and a DataList as a pandas.Series. Hand a pandas or polars DataFrame to insyra.Return and it comes back to Go as a DataTable (a Series comes back as a DataList). The first time, it sets up its own Python environment with uv and preinstalls numpy, pandas, polars, scikit-learn, statsmodels, matplotlib and a few more, so there's no venv for you to babysit. That first run needs network access. pd: gpandas, no Python at all. pd.FromDataTable turns a DataTable into a gpandas DataFrame and ToDataTable brings it back, for when you want pandas-style methods but still one Go binary. I showed that round trip in the comparison post."}]
 draft: false
 ---
 
@@ -12,7 +12,7 @@ draft: false
 
 Yes. Data analysis in Golang is real, and you can do the whole loop in Go: load a CSV or an Excel sheet, clean it, group it, run a test or a regression, draw a chart, and ship it all as one binary.
 
-The honest part: Go's data ecosystem is smaller than Python's, and the tools are spread across a few libraries instead of one obvious stack. So the useful question isn't "can I", it's "which library does which part". That's what this FAQ answers. I build one of these libraries ([Insyra](https://github.com/HazelnutParadise/insyra)), so keep that in mind, and I've tried to be fair to the others. Everything about other projects below comes from their own GitHub repos and READMEs, checked on November 17, 2026.
+The honest part: Go's data ecosystem is smaller than Python's, and the tools are spread across a few libraries instead of one obvious stack. The good news: needing Python for one step doesn't mean leaving Go (more on that below). So the useful question isn't "can I", it's "which library does which part". That's what this FAQ answers. I build one of these libraries ([Insyra](https://github.com/HazelnutParadise/insyra)), so keep that in mind, and I've tried to be fair to the others. Everything about other projects below comes from their own GitHub repos and READMEs, checked on November 17, 2026.
 
 ## What's the best Go library for data analysis?
 
@@ -160,15 +160,69 @@ Yes, and this is where the libraries split the most.
 - **Charts:** [gonum/plot](https://github.com/gonum/plot) makes static charts, and [go-echarts](https://github.com/go-echarts/go-echarts) makes interactive HTML ones. Insyra wraps both: `gplot` on gonum/plot, `plot` on go-echarts.
 - **Models:** Insyra has `ml` (scikit-learn-style models) and `nn` (neural networks), and the README says both run with no Python runtime and no cgo.
 
-## When should you stay in Python?
+## What if I still need Python, pandas or polars?
 
-I'd rather you pick right than pick mine:
+Then don't pick a side. Keep Go as the main flow and call Python for the one step that needs it. Insyra connects to it directly, in two ways:
 
-- **You live in notebooks.** Jupyter + pandas for poking at data interactively is still the smoothest experience out there. Go is better once the analysis turns into a program.
-- **You need one specific Python library.** Some models and domain packages only exist in Python. (Insyra's `py` package can run Python code from Go and pass variables both ways, if you need a bridge.)
-- **Your team already shares pandas code.** Switching languages for a working pipeline is rarely worth it.
+- **`py`: real Python, called from Go.** `py.RunCodef` runs Python code and fills `$v1`, `$v2`, … with your Go values. A `DataTable` arrives as a `pandas.DataFrame` and a `DataList` as a `pandas.Series`. Hand a pandas or polars DataFrame to `insyra.Return` and it comes back to Go as a `DataTable` (a Series comes back as a `DataList`). The first time, it sets up its own Python environment with uv and preinstalls numpy, pandas, polars, scikit-learn, statsmodels, matplotlib and a few more, so there's no venv for you to babysit. That first run needs network access.
+- **`pd`: gpandas, no Python at all.** `pd.FromDataTable` turns a `DataTable` into a [gpandas](https://github.com/apoplexi24/gpandas) DataFrame and `ToDataTable` brings it back, for when you want pandas-style methods but still one Go binary. I showed that round trip in the [comparison post](/posts/insyra-vs-gota-vs-dataframe-go/).
 
-Go makes the most sense when the analysis lives inside a Go service or CLI, when you want one binary with no Python environment to manage, or when you simply like Go and want to keep thinking in Go.
+Here's the `py` route with the same ad data. Go reads it, pandas does a quick groupby, and the answer lands back in Go as a `DataTable`:
+
+```go
+package main
+
+import (
+	"github.com/HazelnutParadise/insyra"
+	"github.com/HazelnutParadise/insyra/py"
+)
+
+const data = `channel,ad_spend,signups
+search,120,38
+social,80,22
+search,150,44
+social,60,24
+search,200,49
+social,90,31
+search,170,43
+social,110,28`
+
+func main() {
+	dt, err := insyra.ReadCSV_StringWithOptions(data, insyra.CSVReadOptions{FirstRowToColNames: true})
+	if err != nil {
+		panic(err)
+	}
+
+	// $v1 arrives in Python as a pandas.DataFrame.
+	// Whatever DataFrame you hand to insyra.Return comes back as a DataTable.
+	var byChannel *insyra.DataTable
+	err = py.RunCodef(&byChannel, `
+df = $v1
+df["signups_per_100"] = df["signups"] / df["ad_spend"] * 100
+insyra.Return(df.groupby("channel")[["ad_spend", "signups_per_100"]].mean().round(2))
+`, dt)
+	if err != nil {
+		panic(err)
+	}
+
+	byChannel.Show()
+}
+```
+
+```text
+DataTable (2 rows x 2 columns)
+================================================================================
+ stat: A(mean=122.50, range=[85.00, 160.00]) B(mean=29.77, range=[27.70, 31.85]) 
+--------------------------------------------------------------------------------
+RowNames    A(ad_spend)  B(signups_per_100) 
+----------- ------------ -------------------
+0: search           160                27.7 
+1: social            85               31.85
+```
+
+So social brings in more signups per 100 spent, even though search gets more budget. `byChannel` is an ordinary `DataTable` again, so the rest (stats, a chart, `ToExcel`) stays in Go. I ran this with Insyra v0.3.5. Its managed environment picked Python 3.12 with pandas 3.1.1 and polars 2.1.0. I also checked that a polars DataFrame returned through `insyra.Return` lands as a `DataTable`.
+
+Two honest caveats. Each call runs Python as a separate process and passes the data over local IPC, so call it for a step, not inside a hot loop. And if your whole day is exploring data in a notebook, Jupyter + pandas is still the smoothest place to do that. Go starts to make the most sense once the analysis turns into a program: a service, a CLI, a scheduled job, one binary you can ship.
 
 ## Found a gap, or something I got wrong?
 
