@@ -1,5 +1,5 @@
 ---
-title: "Go 可以做資料分析嗎？套件選擇與串接 Python 的作法"  # TITLE: swap here only (slug is the filename/URL, not derived from title). Alternatives in ZH-SEO-GUIDE.md
+title: "Go 可以做資料分析嗎？4 個 Golang 套件比較，還能直接串 Python"
 description: "Go 可以做資料分析，只是套件比較分散。整理 Gonum、Gota、dataframe-go、Insyra 的差異與維護狀況，還有需要 pandas 時怎麼從 Go 直接串接 Python。"
 pubDate: 2026-11-18
 category: guides
