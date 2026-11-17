@@ -180,4 +180,4 @@ Small thing I like here: `Show` puts a quick stat line on top of the table (mean
 - Every `DataTable` method: [DataTable docs](https://hazelnutparadise.github.io/insyra/#/DataTable). Every `DataList` method: [DataList docs](https://hazelnutparadise.github.io/insyra/#/DataList).
 - All of CCL (`IF`, `CASE`, ranges, `LAG`, `CUMSUM`, ...): [CCL docs](https://hazelnutparadise.github.io/insyra/#/CCL).
 - A longer, end-to-end version of this workflow: [Sales Analysis End-to-End tutorial](https://github.com/HazelnutParadise/insyra/blob/main/Docs/tutorials/sales-analysis-end-to-end.md).
-- Full documentation: https://hazelnutparadise.github.io/insyra/ · Official site: https://insyra.hazelnut-paradise.com
+- [Full documentation](https://hazelnutparadise.github.io/insyra/) · [Official site](https://insyra.hazelnut-paradise.com)

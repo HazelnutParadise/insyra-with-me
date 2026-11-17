@@ -171,4 +171,4 @@ back.Show()
 go get github.com/HazelnutParadise/insyra/allpkgs
 ```
 
-儲存庫：https://github.com/HazelnutParadise/insyra · 文件：https://hazelnutparadise.github.io/insyra/ · 要是我哪個函式庫寫錯了，歡迎[開 issue](https://github.com/HazelnutParadise/insyra/issues) 跟我說，我會改。
+[Insyra GitHub 儲存庫](https://github.com/HazelnutParadise/insyra) · [使用文件](https://hazelnutparadise.github.io/insyra/) · 要是我哪個函式庫寫錯了，歡迎[開 issue](https://github.com/HazelnutParadise/insyra/issues) 跟我說，我會改。

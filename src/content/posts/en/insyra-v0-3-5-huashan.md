@@ -94,4 +94,4 @@ go get -u github.com/HazelnutParadise/insyra/allpkgs@v0.3.5
 
 With Go 1.21 or newer, the `go` command downloads the 1.26.9 toolchain automatically unless `GOTOOLCHAIN=local` is set.
 
-Full notes: [GitHub release v0.3.5](https://github.com/HazelnutParadise/insyra/releases/tag/v0.3.5) · [CHANGELOG](https://github.com/HazelnutParadise/insyra/blob/main/CHANGELOG.md#v035) · Docs: https://hazelnutparadise.github.io/insyra/ ([DataTable](https://hazelnutparadise.github.io/insyra/#/DataTable), [DataList](https://hazelnutparadise.github.io/insyra/#/DataList)) · Official site: https://insyra.hazelnut-paradise.com
+Full notes: [GitHub release v0.3.5](https://github.com/HazelnutParadise/insyra/releases/tag/v0.3.5) · [CHANGELOG](https://github.com/HazelnutParadise/insyra/blob/main/CHANGELOG.md#v035) · [Docs](https://hazelnutparadise.github.io/insyra/) ([DataTable](https://hazelnutparadise.github.io/insyra/#/DataTable), [DataList](https://hazelnutparadise.github.io/insyra/#/DataList)) · [Official site](https://insyra.hazelnut-paradise.com)
