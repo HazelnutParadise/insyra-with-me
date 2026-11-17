@@ -15,6 +15,8 @@ const posts = defineCollection({
       tags: z.array(z.string()).default([]),
       cover: image().optional(),
       coverAlt: z.string().optional(),
+      // optional FAQPage JSON-LD; answers must be text already in the post body
+      faq: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
       draft: z.boolean().default(false),
       // true = placeholder/sample content; excluded when INCLUDE_SAMPLES=false (npm run build:prod)
       sample: z.boolean().default(false),
