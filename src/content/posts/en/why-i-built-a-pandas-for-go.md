@@ -78,4 +78,4 @@ The full runnable version, with its real output, is in [How to do your first dat
 go get github.com/HazelnutParadise/insyra/allpkgs
 ```
 
-Repo: https://github.com/HazelnutParadise/insyra · Docs: https://hazelnutparadise.github.io/insyra/ · Tell me what you'd want it to do next by [opening an issue](https://github.com/HazelnutParadise/insyra/issues).
+[Insyra on GitHub](https://github.com/HazelnutParadise/insyra) · [Docs](https://hazelnutparadise.github.io/insyra/) · Tell me what you'd want it to do next by [opening an issue](https://github.com/HazelnutParadise/insyra/issues).
