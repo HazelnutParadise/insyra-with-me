@@ -4,7 +4,7 @@ description: "Go 可以做資料分析，只是套件比較分散。整理 Gonum
 pubDate: 2026-11-18
 category: guides
 tags: ["faq", "data-analysis", "golang", "dataframe", "pandas", "python", "gonum", "gota", "dataframe-go"]
-faq: [{"q": "Go 語言可以做資料分析嗎？", "a": "用 Go 做資料分析是做得到的：讀 CSV、讀 Excel、清資料、分組統計、跑相關和迴歸、畫圖，整段都能寫在 Go 裡，最後編成一個執行檔就能丟到伺服器上跑。真正的問題是 Go 的資料分析套件比較分散，沒有像 Python 那樣「pandas + NumPy + matplotlib」一套大家都在用的組合，第一次找很容易不知道從哪下手。"}, {"q": "Go 資料分析套件有哪些？", "a": "最常見的有 4 個：Gonum 管數值運算，Gota 和 dataframe-go 是比較早期的 DataFrame（資料框）套件，Insyra 則是從表格一路包到統計、圖表和模型。"}, {"q": "Golang 有類似 pandas 的套件嗎？", "a": "有，Go 也有幾個 pandas 替代品，看你要的是哪一種「像」。想要 API 長得跟 pandas 很像，可以看 Gota、dataframe-go 或 gpandas。想要的是「打開來就能讀資料、整理、做摘要、跑統計」那種日常用法，Insyra 比較接近。它不是 pandas 的移植版，函式名稱也沒照抄，而是用 Go 的寫法做同一份工作。我為什麼會想做這個，寫在〈我為什麼要做 Insyra，一個 Go 的「Pandas」〉。"}, {"q": "Go 語言怎麼串 Python？", "a": "用 Insyra 就能直接串，不用換語言：主流程留在 Go，需要 Python 的那一步再呼叫它就好。很多人卡在「某一步只有 Python 有現成的套件」，就乾脆整個專案都改用 Python，其實沒必要。Insyra 有兩條路可以直接串：py：在 Go 裡直接跑 Python。 用 py.RunCodef 執行 Python 程式碼，$v1、$v2… 會換成你從 Go 傳進去的變數。DataTable 傳過去就是 pandas.DataFrame，DataList 就是 pandas.Series。Python 那邊把 pandas 或 polars 的 DataFrame 交給 insyra.Return，回到 Go 就是 DataTable（Series 則變回 DataList）。第一次執行時，它會用 uv 自己建一個 Python 環境，numpy、pandas、polars、scikit-learn、statsmodels、matplotlib 等等都先裝好，不用你自己顧 venv。只是第一次要能連網。 pd：接 gpandas，完全不用 Python。 pd.FromDataTable 把 DataTable 轉成 gpandas 的 DataFrame，ToDataTable 再轉回來。想用 pandas 風格的寫法、又想維持一個執行檔，就走這條。實際的來回轉換我在比較文裡示範過。"}, {"q": "Go 可以讀 Excel 嗎？", "a": "可以，最省事的作法是用 Insyra 一行讀成表格，它底層用的是 Go 處理 Excel 最常見的 Excelize。用 Gota 的話，要先用 Excelize 把每一列讀出來，再丟進 dataframe.LoadRecords；dataframe-go 則是支援匯出 Excel。Insyra 一行就能讀進來：insyra.ReadExcelSheet(\"sales.xlsx\", \"2026\", false, true) 把指定的工作表讀成 DataTable；要寫回去用 dt.ToExcel(\"report.xlsx\", insyra.ExcelWriteOptions{Sheet: \"2026\", SetColNamesToFirstRow: true})（v0.3.5 新增）。有個小地方要注意：v0.3.5 從 Excel 讀進來的儲存格都是字串，數字欄位記得先轉型再算。"}, {"q": "Go 能做統計和畫圖嗎？", "a": "可以，統計和畫圖在 Go 都有套件，而且這裡是各套件差最多的地方。統計： Gonum 的 stat 有平均、變異數、相關、迴歸、機率分布這些基本功。Insyra 的 stats 直接吃 DataList，另外還有假設檢定、ANOVA、各種迴歸、PCA，README 寫明統計結果有拿 R 對過。 畫圖： gonum/plot 畫靜態圖，go-echarts 畫可以互動的 HTML 圖。Insyra 兩個都有包：gplot 走 gonum/plot，plot 走 go-echarts。 機器學習： Insyra 有 ml（scikit-learn 風格）和 nn（神經網路），README 寫這兩個不需要 Python，也不用 cgo。"}, {"q": "Go 資料分析套件怎麼選？", "a": "看你要做到哪一步：只是要對一串數字做運算、算統計量：Gonum 就很夠。 手上已經有能跑的 Gota 或 dataframe-go 程式碼：可以繼續用，但新專案要先看一下維護狀態。 想要一張表從讀資料、整理、統計一路做到圖表和模型，都留在 Go 裡：Insyra。 某一步非 Python 不可：主流程留在 Go，用 Insyra 的 py 呼叫 pandas 或 polars 那一步就好，不用整個搬家。"}]
+faq: [{"q": "Go 語言可以做資料分析嗎？", "a": "用 Go 做資料分析是做得到的：讀 CSV、讀 Excel、清資料、分組統計、跑相關和迴歸、畫圖，整段都能寫在 Go 裡，最後編成一個執行檔就能丟到伺服器上跑。真正的問題是 Go 的資料分析套件比較分散，沒有像 Python 那樣「pandas + NumPy + matplotlib」一套大家都在用的組合，第一次找很容易不知道從哪下手。"}, {"q": "Go 資料分析套件有哪些？", "a": "最常見的有 4 個：Gonum 管數值運算，Gota 和 dataframe-go 是比較早期的 DataFrame（資料框）套件，Insyra 則是從表格一路包到統計、圖表和模型。"}, {"q": "Golang 有類似 pandas 的套件嗎？", "a": "有，Go 也有幾個 pandas 替代品，看你要的是哪一種「像」。 想要 API 長得跟 pandas 很像，可以看上面介紹過的 Gota、dataframe-go，或是照 pandas 寫法設計的 gpandas。想要的是「打開來就能讀資料、整理、做摘要、跑統計」那種日常用法，Insyra 比較接近。它不是 pandas 的移植版，函式名稱也沒照抄，而是用 Go 的寫法做同一份工作。我為什麼會想做這個，寫在〈我為什麼要做 Insyra，一個 Go 的「Pandas」〉。"}, {"q": "Go 語言怎麼串 Python？", "a": "用 Insyra 就能直接串，不用換語言：主流程留在 Go，需要 Python 的那一步再呼叫它就好。很多人卡在「某一步只有 Python 有現成的套件」，就乾脆整個專案都改用 Python，其實沒必要。Insyra 有兩條路可以直接串：py：在 Go 裡直接跑 Python。 用 py.RunCodef 執行 Python 程式碼，$v1、$v2… 會換成你從 Go 傳進去的變數。DataTable 傳過去就是 pandas.DataFrame，DataList 就是 pandas.Series。Python 那邊把 pandas 或 polars 的 DataFrame 交給 insyra.Return，回到 Go 就是 DataTable（Series 則變回 DataList）。第一次執行時，它會用 uv 自己建一個 Python 環境，numpy、pandas、polars、scikit-learn、statsmodels、matplotlib 等等都先裝好，不用你自己顧 venv。只是第一次要能連網。 pd：接 gpandas，完全不用 Python。 pd.FromDataTable 把 DataTable 轉成 gpandas 的 DataFrame，ToDataTable 再轉回來。想用 pandas 風格的寫法、又想維持一個執行檔，就走這條。實際的來回轉換我在比較文裡示範過。"}, {"q": "Go 可以讀 Excel 嗎？", "a": "可以，最省事的作法是用 Insyra 一行讀成表格，它底層用的是 Go 處理 Excel 最常見的 Excelize。用 Gota 的話，要先用 Excelize 把每一列讀出來，再丟進 dataframe.LoadRecords；dataframe-go 則是支援匯出 Excel。Insyra 一行就能讀進來：insyra.ReadExcelSheet(\"sales.xlsx\", \"2026\", false, true) 把指定的工作表讀成 DataTable；要寫回去用 dt.ToExcel(\"report.xlsx\", insyra.ExcelWriteOptions{Sheet: \"2026\", SetColNamesToFirstRow: true})（v0.3.5 新增）。有個小地方要注意：v0.3.5 從 Excel 讀進來的儲存格都是字串，數字欄位記得先轉型再算。"}, {"q": "Go 能做統計和畫圖嗎？", "a": "可以，常用的統計分析和常見的圖表，Go 都有套件能做。下面照「你想做什麼」來分，講清楚每一種是在做什麼、該找哪個套件。 統計： 敘述統計：平均、中位數、標準差、四分位數這些，用來先看懂資料大概長什麼樣子。Gonum 的 stat 可以對一串數字算；Insyra 可以直接對表格裡的某一欄算，Describe 還能一次列出整張表的摘要，就是上面範例印出來的那張。 相關與迴歸：看兩個數字會不會一起變動，以及能不能用其中一個去推估另一個。Gonum 和 Insyra 都能算相關係數和線性迴歸；Insyra 還會附上 p 值（用來判斷這個結果是不是碰巧），也能配多項式、指數、對數這幾種曲線。 假設檢定：用資料判斷兩組之間的差異是真的，還是運氣剛好。Insyra 的 stats 有 t 檢定、卡方檢定和 ANOVA（變異數分析，常用來一次比較三組以上的平均）。Gonum 沒有現成的檢定函式，只提供常態、t、卡方這些機率分布，要自己組起來算。 主成分分析（PCA）：把很多欄濃縮成少數幾欄，同時保留大部分的資訊。Insyra 直接拿整張表來跑，Gonum 的 stat 則是對矩陣跑。 Insyra 的 README 寫明，統計結果都有拿 R 對照過。 畫圖： 靜態圖：輸出成 PNG、SVG、PDF 這類圖檔，可以直接放進報告。這是 gonum/plot 在做的事，Insyra 的 gplot 把它包好了，折線圖、長條圖、散佈圖、直方圖都只要呼叫一個函式就能建立。 互動圖：存成 HTML 網頁，用瀏覽器打開就能互動。這是 go-echarts 的專長，Insyra 的 plot 包的就是它，折線圖、長條圖、散佈圖、圓餅圖、盒鬚圖、熱圖都有，也能另存成 PNG。 機器學習：Insyra 的 ml 可以建線性迴歸、邏輯斯迴歸、決策樹、隨機森林這些模型，用起來像 Python 的 scikit-learn；nn 則是用來建立和訓練神經網路。README 寫明這兩個都不需要 Python，也不用 cgo（讓 Go 呼叫 C 程式碼的機制）。"}, {"q": "Go 資料分析套件怎麼選？", "a": "看你要做到哪一步：只是要對一串數字做運算、算統計量：Gonum 就很夠。 手上已經有能跑的 Gota 或 dataframe-go 程式碼：可以繼續用，但新專案要先看一下維護狀態。 想要一張表從讀資料、整理、統計一路做到圖表和模型，都留在 Go 裡：Insyra。 某一步非 Python 不可：主流程留在 Go，用 Insyra 的 py 呼叫 pandas 或 polars 那一步就好，不用整個搬家。"}]
 draft: false
 ---
 
@@ -22,25 +22,25 @@ draft: false
 
 ### Gonum：Go 的數值運算與統計套件
 
-[Gonum](https://github.com/gonum/gonum) 是 Go 的數值運算套件組，矩陣（`mat`）、統計（`stat`）、最佳化、圖論都有。專案很活躍，2026 年 1 月出了 v0.17.0，固定半年發一版。
+[Gonum](https://github.com/gonum/gonum) 是 Go 的數值運算套件組，矩陣運算（`mat`）、統計（`stat`）、最佳化（找出讓結果最好的參數）、圖論（處理點和連線組成的網路）都有。專案很活躍，2026 年 1 月出了 v0.17.0，固定半年發一版。
 
 要注意的是它沒有「表格」這種東西，你拿到的是 `[]float64` 跟矩陣，欄位名稱、文字欄位要自己管。README 上也掛著「unstable」標章，代表改版時 API 可能會動。
 
 ### Gota：老牌 Golang DataFrame 套件，但已經封存
 
-[Gota](https://github.com/go-gota/gota) 是 Go 最早期的 DataFrame 套件之一，有 DataFrame、Series、讀 CSV／JSON、篩選、join，還能跟 Gonum 的矩陣互轉。
+[Gota](https://github.com/go-gota/gota) 是 Go 最早期的 DataFrame 套件之一，可以把資料放進 DataFrame（整張表）和 Series（單一欄），讀 CSV／JSON 檔、篩選資料列、用 join 把兩張表照共同的欄位接起來，也能跟 Gonum 的矩陣互轉。
 
 不過它的儲存庫已經封存（唯讀），最後一個版本是 2021 年 10 月的 v0.12.0，README 到現在還寫著 API「仍在變動，使用風險自負」。舊專案用得好好的可以繼續用，新專案我會建議先想清楚。
 
 ### dataframe-go：讀寫格式最多的 Go DataFrame 套件，停在 2021 年
 
-[dataframe-go](https://github.com/rocketlaunchr/dataframe-go) 的強項是讀寫格式：CSV、JSONL、Parquet、MySQL、PostgreSQL 都能進能出，也能匯出 Excel，另外還有內插、時間序列預測、畫圖。統計的部分 README 是叫你搭 Gonum 或 montanaflynn/stats。
+[dataframe-go](https://github.com/rocketlaunchr/dataframe-go) 的強項是讀寫格式：CSV、JSONL、Parquet 這些資料檔，還有 MySQL、PostgreSQL 資料庫，都能讀進來也能寫出去，另外也能匯出 Excel。它還能用內插補上缺漏的數值、用時間序列預測從過去的數字推估接下來的走勢，也內建畫圖。統計則沒有自己做，README 是叫你另外搭 Gonum 或 montanaflynn/stats 這類統計套件。
 
 它沒有封存，但最後一次 commit 停在 2021 年 10 月，也沒有正式發過版本。README 自己寫 API 還不穩定，建議鎖定某個 commit 再用。
 
 ### Insyra：從讀資料、統計到機器學習都在 Go 裡完成
 
-[Insyra](https://github.com/HazelnutParadise/insyra) 的核心是 `DataTable`（一張表）和 `DataList`（一個欄位），旁邊再接統計（`stats`）、圖表（`plot`、`gplot`）、機器學習（`ml`）、神經網路（`nn`），還有等一下會講的 Python 橋接（`py`、`pd`）。目前版本是 2026 年 10 月 24 日釋出的 v0.3.5，MIT 授權。它還在快速改版，用之前記得對一下你那版的文件。
+[Insyra](https://github.com/HazelnutParadise/insyra) 的核心是 `DataTable`（一張表）和 `DataList`（一個欄位），旁邊再接幾個各有分工的子套件：`stats` 算統計、`plot` 和 `gplot` 畫圖、`ml` 跑機器學習模型、`nn` 建神經網路，還有等一下會講、用來串 Python 的 `py` 和 `pd`。目前版本是 2026 年 10 月 24 日釋出的 v0.3.5，MIT 授權。它還在快速改版，用之前記得對一下你那版的文件。
 
 ### Go 資料分析套件比較表：功能定位與維護狀態
 
@@ -59,7 +59,7 @@ draft: false
 
 有，Go 也有幾個 pandas 替代品，看你要的是哪一種「像」。
 
-想要 API 長得跟 pandas 很像，可以看 Gota、dataframe-go 或 gpandas。想要的是「打開來就能讀資料、整理、做摘要、跑統計」那種日常用法，Insyra 比較接近。它不是 pandas 的移植版，函式名稱也沒照抄，而是用 Go 的寫法做同一份工作。我為什麼會想做這個，寫在[〈我為什麼要做 Insyra，一個 Go 的「Pandas」〉](/zh-tw/posts/why-i-built-a-pandas-for-go/)。
+想要 API 長得跟 pandas 很像，可以看上面介紹過的 Gota、dataframe-go，或是照 pandas 寫法設計的 gpandas。想要的是「打開來就能讀資料、整理、做摘要、跑統計」那種日常用法，Insyra 比較接近。它不是 pandas 的移植版，函式名稱也沒照抄，而是用 Go 的寫法做同一份工作。我為什麼會想做這個，寫在[〈我為什麼要做 Insyra，一個 Go 的「Pandas」〉](/zh-tw/posts/why-i-built-a-pandas-for-go/)。
 
 ## 用 Go 做資料分析怎麼寫？Gonum 與 Insyra 範例對照
 
@@ -244,11 +244,23 @@ Insyra 一行就能讀進來：`insyra.ReadExcelSheet("sales.xlsx", "2026", fals
 
 ## Go 能做統計和畫圖嗎？
 
-可以，統計和畫圖在 Go 都有套件，而且這裡是各套件差最多的地方。
+可以，常用的統計分析和常見的圖表，Go 都有套件能做。下面照「你想做什麼」來分，講清楚每一種是在做什麼、該找哪個套件。
 
-- **統計：** Gonum 的 `stat` 有平均、變異數、相關、迴歸、機率分布這些基本功。Insyra 的 `stats` 直接吃 `DataList`，另外還有假設檢定、ANOVA、各種迴歸、PCA，README 寫明統計結果有拿 R 對過。
-- **畫圖：** [gonum/plot](https://github.com/gonum/plot) 畫靜態圖，[go-echarts](https://github.com/go-echarts/go-echarts) 畫可以互動的 HTML 圖。Insyra 兩個都有包：`gplot` 走 gonum/plot，`plot` 走 go-echarts。
-- **機器學習：** Insyra 有 `ml`（scikit-learn 風格）和 `nn`（神經網路），README 寫這兩個不需要 Python，也不用 cgo。
+**統計**
+
+- **敘述統計**：平均、中位數、標準差、四分位數這些，用來先看懂資料大概長什麼樣子。Gonum 的 `stat` 可以對一串數字算；Insyra 可以直接對表格裡的某一欄算，`Describe` 還能一次列出整張表的摘要，就是上面範例印出來的那張。
+- **相關與迴歸**：看兩個數字會不會一起變動，以及能不能用其中一個去推估另一個。Gonum 和 Insyra 都能算相關係數和線性迴歸；Insyra 還會附上 p 值（用來判斷這個結果是不是碰巧），也能配多項式、指數、對數這幾種曲線。
+- **假設檢定**：用資料判斷兩組之間的差異是真的，還是運氣剛好。Insyra 的 `stats` 有 t 檢定、卡方檢定和 ANOVA（變異數分析，常用來一次比較三組以上的平均）。Gonum 沒有現成的檢定函式，只提供常態、t、卡方這些機率分布，要自己組起來算。
+- **主成分分析（PCA）**：把很多欄濃縮成少數幾欄，同時保留大部分的資訊。Insyra 直接拿整張表來跑，Gonum 的 `stat` 則是對矩陣跑。
+
+Insyra 的 README 寫明，統計結果都有拿 R 對照過。
+
+**畫圖**
+
+- **靜態圖**：輸出成 PNG、SVG、PDF 這類圖檔，可以直接放進報告。這是 [gonum/plot](https://github.com/gonum/plot) 在做的事，Insyra 的 `gplot` 把它包好了，折線圖、長條圖、散佈圖、直方圖都只要呼叫一個函式就能建立。
+- **互動圖**：存成 HTML 網頁，用瀏覽器打開就能互動。這是 [go-echarts](https://github.com/go-echarts/go-echarts) 的專長，Insyra 的 `plot` 包的就是它，折線圖、長條圖、散佈圖、圓餅圖、盒鬚圖、熱圖都有，也能另存成 PNG。
+
+**機器學習**：Insyra 的 `ml` 可以建線性迴歸、邏輯斯迴歸、決策樹、隨機森林這些模型，用起來像 Python 的 scikit-learn；`nn` 則是用來建立和訓練神經網路。README 寫明這兩個都不需要 Python，也不用 cgo（讓 Go 呼叫 C 程式碼的機制）。
 
 ## Go 資料分析套件怎麼選？我的建議
 
