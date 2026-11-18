@@ -180,4 +180,4 @@ South,520
 - `DataTable` 的所有方法：[DataTable 文件](https://hazelnutparadise.github.io/insyra/#/DataTable)。`DataList` 的所有方法：[DataList 文件](https://hazelnutparadise.github.io/insyra/#/DataList)。
 - CCL 的完整功能（`IF`、`CASE`、範圍、`LAG`、`CUMSUM`……）：[CCL 文件](https://hazelnutparadise.github.io/insyra/#/CCL)。
 - 同一套流程更完整的版本：[Sales Analysis End-to-End 教學](https://github.com/HazelnutParadise/insyra/blob/main/Docs/tutorials/sales-analysis-end-to-end.md)。
-- 完整文件：https://hazelnutparadise.github.io/insyra/ · 官網：https://insyra.hazelnut-paradise.com
+- [完整使用文件](https://hazelnutparadise.github.io/insyra/) · [官網](https://insyra.hazelnut-paradise.com)

@@ -94,4 +94,4 @@ go get -u github.com/HazelnutParadise/insyra/allpkgs@v0.3.5
 
 如果你用的是 Go 1.21 以上，`go` 指令會自動下載 1.26.9 工具鏈，除非你設了 `GOTOOLCHAIN=local`。
 
-完整說明：[GitHub 釋出 v0.3.5](https://github.com/HazelnutParadise/insyra/releases/tag/v0.3.5) · [CHANGELOG_TW](https://github.com/HazelnutParadise/insyra/blob/main/CHANGELOG_TW.md) · 文件：https://hazelnutparadise.github.io/insyra/（[DataTable](https://hazelnutparadise.github.io/insyra/#/DataTable)、[DataList](https://hazelnutparadise.github.io/insyra/#/DataList)）· 官網：https://insyra.hazelnut-paradise.com
+完整說明：[GitHub 釋出 v0.3.5](https://github.com/HazelnutParadise/insyra/releases/tag/v0.3.5) · [CHANGELOG_TW](https://github.com/HazelnutParadise/insyra/blob/main/CHANGELOG_TW.md) · [使用文件](https://hazelnutparadise.github.io/insyra/)（[DataTable](https://hazelnutparadise.github.io/insyra/#/DataTable)、[DataList](https://hazelnutparadise.github.io/insyra/#/DataList)） · [官網](https://insyra.hazelnut-paradise.com)
