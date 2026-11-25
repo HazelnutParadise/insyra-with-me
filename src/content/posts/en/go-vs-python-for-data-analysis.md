@@ -4,7 +4,7 @@ description: "Go vs Python for data analysis: 5 real differences, when Go is the
 pubDate: 2026-11-25
 category: guides
 tags: ["comparison", "data-analysis", "golang", "python", "pandas", "statistics", "faq"]
-faq: [{"q": "Is Go or Python better for data analysis?", "a": "Python is the better fit for exploring data in a notebook and for anything that leans on its huge library ecosystem. Go is the better fit when the analysis has to become a program: a service, a CLI or a scheduled job that ships as one binary. With Insyra you can do the whole loop in Go and still call Python for the one step that needs it."}, {"q": "Can Go call Python libraries for data analysis?", "a": "Yes. Insyra's py package runs Python code from Go: a DataTable arrives as a pandas.DataFrame, and a DataFrame handed to insyra.Return comes back to Go as a DataTable. It manages its own Python environment with uv."}, {"q": "When should you stay in Python instead of Go?", "a": "Stay in Python when your day is notebook exploration, when the method you need only exists as a Python library, or when your team and platform already run on Python."}]
+faq: [{"q": "Is Go or Python better for data analysis?", "a": "Python is the better fit for exploring data in a notebook. Go is the better fit when the analysis has to become a program: a service, a CLI or a scheduled job that ships as one binary. In Python a full analysis stitches together pandas, SciPy, statsmodels, scikit-learn and matplotlib; in Go, Insyra alone covers data tables, statistics, charts and machine learning, so one go get covers the whole workflow, and you can still call Python for the one step that needs it."}, {"q": "Can Go call Python libraries for data analysis?", "a": "Yes. Insyra's py package runs Python code from Go: a DataTable arrives as a pandas.DataFrame, and a DataFrame handed to insyra.Return comes back to Go as a DataTable. It manages its own Python environment with uv."}, {"q": "When should you stay in Python instead of Go?", "a": "Stay in Python when your day is notebook exploration, when the method you need only exists as a Python library, or when your team and platform already run on Python."}]
 draft: false
 ---
 
@@ -14,7 +14,7 @@ Pick Python when you're exploring data in a notebook, and pick Go when the analy
 
 I like both. Python is where most of us learned pandas, and I still open a notebook when I want to poke at a weird CSV. But a lot of analysis doesn't stay in the notebook. It becomes a nightly report, an endpoint that returns a p-value, or a tool a teammate runs without knowing what a virtualenv is. That's where data analysis in Golang starts to pay off.
 
-The Go examples below use [Insyra](https://github.com/HazelnutParadise/insyra) v0.3.5, the current release:
+The Go examples below use [Insyra](https://github.com/HazelnutParadise/insyra) v0.3.5, the current release. It's one dependency that covers data tables, statistics, charts and machine learning, so this is the only install the whole post needs:
 
 ```bash
 go get github.com/HazelnutParadise/insyra
@@ -30,9 +30,11 @@ The biggest differences are how you ship the result and how you explore the data
 |---|---|---|
 | 1. Shipping it | Needs a Python interpreter and installed packages wherever it runs | `go build` gives you one executable |
 | 2. Exploring | Jupyter: run a cell, look, change, repeat | Compile and run a program; Insyra also has a CLI with its own REPL |
-| 3. Ecosystem | The widest set of data, stats and ML libraries around | Smaller; Insyra covers loading, cleaning, stats, charts, `ml` and `nn` in one place |
+| 3. Ecosystem | Stitch together pandas, SciPy, statsmodels, scikit-learn and matplotlib | Insyra alone: `DataTable`, `stats`, `plot`/`gplot`, `ml` and `nn` from one `go get` |
 | 4. Types | Checked when the code runs | Checked by the compiler before it runs |
 | 5. Mixing the two | Calling Go from Python isn't the usual path | Insyra's `py` package calls Python from Go and hands tables back and forth |
+
+Row 3 needs a closer look. A Python analysis is often five libraries glued together: pandas for the table, SciPy and statsmodels for tests and regression, scikit-learn for models, matplotlib for the chart, each with its own API. In Go, Insyra alone covers the whole workflow: `DataTable` and `DataList` for the data, `stats` for tests and regression, `plot` and `gplot` for charts, `ml` and `nn` for models, plus `csvxl` and `parquet` for files. It's all one module, so `go get github.com/HazelnutParadise/insyra` is the whole shopping list. Python still has more libraries overall, especially for niche or brand-new methods, and the `py` section below covers that case.
 
 Insyra's README says its statistics are checked against R, its models against scikit-learn, and its neural networks against PyTorch and onnxruntime. So moving the math to Go doesn't mean trusting a new set of numbers blindly.
 
@@ -43,6 +45,7 @@ Go is the better fit when the analysis is part of a product rather than a one-of
 - **The result has to run somewhere else.** A scheduled job on a server, a CLI for the ops team, a binary inside a container. The stats example below builds with `CGO_ENABLED=0 go build` into a single file you copy over and run. No `pip install`, no "works on my machine".
 - **The analysis lives inside a Go service.** If your backend is already Go, computing a t-test or a regression in the same process beats shipping data to a separate Python service and back.
 - **You want the compiler on your side.** Rename a column variable, pass the wrong type, forget to handle an error: Go tells you at build time, not at 3 a.m. when the cron job runs.
+- **You'd rather have one dependency than five.** Loading, cleaning, tests, regression, charts and models all come from Insyra, so there's no stack of libraries to keep in sync.
 - **You need one or two Python tricks, not all of them.** Keep Go as the main flow and call Python for that step (more on that below).
 
 ## How do you run a t-test and ANOVA in Go instead of SciPy?
@@ -226,11 +229,11 @@ That said, if your work is training large models every day, the Python deep lear
 Stay in Python when exploring is the job, not shipping. Specifically:
 
 - **Your day is a notebook.** Jupyter + pandas is still the smoothest way to poke at data cell by cell, plot something, and change your mind. Go's compile-and-run loop is quick, but it isn't a notebook.
-- **The method you need is a Python library.** New methods and papers usually land in Python first. If a whole project leans on SciPy, statsmodels, PyTorch or a niche package, writing it in Go means calling Python for most of it anyway.
+- **The method you need only exists as a Python library.** Insyra covers the everyday workflow, but new methods and papers usually land in Python first. If a whole project leans on SciPy, statsmodels, PyTorch or a niche package, writing it in Go means calling Python for most of it anyway.
 - **Your team and platform already speak Python.** If your colleagues, your data platform and your managed notebooks all run Python, Go adds a second language for a small win.
 - **The code is a one-off.** A quick look at a CSV you'll never open again doesn't need a compiler.
 
-And the middle ground is real: explore in Python, then move the parts that run every day into Go, calling Python through `py` only where it still earns its place. If you want to try the Go side, [your first data analysis in Go with Insyra](/posts/first-data-analysis-in-go-with-insyra/) walks through a full CSV-to-report program.
+And the middle ground is real: explore in Python, then move the parts that run every day into Go, where one Insyra dependency covers the data, the stats, the charts and the models, calling Python through `py` only where it still earns its place. If you want to try the Go side, [your first data analysis in Go with Insyra](/posts/first-data-analysis-in-go-with-insyra/) walks through a full CSV-to-report program.
 
 ## Missing something for data analysis in Go? Open an issue
 

@@ -4,7 +4,7 @@ description: "Golang 和 Python 做資料分析差在哪？從部署、Jupyter�
 pubDate: 2026-11-25
 category: guides
 tags: ["比較", "資料分析", "golang", "go語言", "python", "統計", "pandas"]
-faq: [{"q": "資料分析用 Golang 還是 Python？", "a": "要在 Jupyter 裡邊看邊改、或需要大量 Python 套件，用 Python。分析要變成服務、CLI 或排程工作，打包成一個執行檔交出去，用 Go。用 Insyra 的話，主流程寫在 Go，某一步需要 Python 再呼叫就好。"}, {"q": "Go 語言可以呼叫 Python 套件嗎？", "a": "可以。Insyra 的 py 套件可以在 Go 裡執行 Python 程式碼：DataTable 傳過去會變成 pandas.DataFrame，交給 insyra.Return 的 DataFrame 回到 Go 會變成 DataTable。Python 環境由它用 uv 自己建好。"}, {"q": "什麼時候資料分析還是用 Python 比較好？", "a": "工作主要是在 notebook 裡探索資料、需要的方法只有 Python 套件有、或團隊和平台本來就都用 Python 的時候。"}]
+faq: [{"q": "資料分析用 Golang 還是 Python？", "a": "要在 Jupyter 裡邊看邊改，用 Python。分析要變成服務、CLI 或排程工作，打包成一個執行檔交出去，用 Go。Python 做資料分析要自己組 pandas、SciPy、statsmodels、scikit-learn、matplotlib；Go 這邊 Insyra 一套就全包了，資料表、統計、畫圖、機器學習都在裡面，某一步需要 Python 再呼叫就好。"}, {"q": "Go 語言可以呼叫 Python 套件嗎？", "a": "可以。Insyra 的 py 套件可以在 Go 裡執行 Python 程式碼：DataTable 傳過去會變成 pandas.DataFrame，交給 insyra.Return 的 DataFrame 回到 Go 會變成 DataTable。Python 環境由它用 uv 自己建好。"}, {"q": "什麼時候資料分析還是用 Python 比較好？", "a": "工作主要是在 notebook 裡探索資料、需要的方法只有 Python 套件有、或團隊和平台本來就都用 Python 的時候。"}]
 draft: false
 ---
 
@@ -16,11 +16,11 @@ Golang 和 Python 做資料分析，最大的差別不在能算什麼，而在�
 |---|---|---|
 | 1. 部署 | 跑的地方要有 Python 和裝好的套件 | `go build` 出來就是一個執行檔 |
 | 2. 探索資料 | Jupyter 一格一格跑、馬上看結果 | 寫成程式編譯執行；Insyra 另有 CLI 和 REPL |
-| 3. 套件生態 | 資料、統計、機器學習套件最齊 | 比較少；Insyra 把讀檔、清理、統計、畫圖、`ml`、`nn` 放在同一套 |
+| 3. 套件生態 | pandas、SciPy、statsmodels、scikit-learn、matplotlib 要自己組 | Insyra 一套全包：`DataTable`、`stats`、`plot`/`gplot`、`ml`、`nn`，一行 `go get` 裝好 |
 | 4. 統計 | SciPy、statsmodels | Insyra 的 `stats`，README 寫明統計結果有拿 R 對照 |
 | 5. 型別 | 執行時才檢查 | 編譯時就檢查 |
 
-這篇的 Go 範例都用 [Insyra](https://github.com/HazelnutParadise/insyra) v0.3.5（目前最新版）：
+這篇的 Go 範例都用 [Insyra](https://github.com/HazelnutParadise/insyra) v0.3.5（目前最新版），資料表、統計、畫圖、機器學習一套全包，整篇只要裝這一個：
 
 ```bash
 go get github.com/HazelnutParadise/insyra
@@ -42,9 +42,18 @@ Go 是寫好程式、編譯、執行，循環很快，但終究不是 notebook�
 
 ### 差異 3：Go 語言的資料分析套件夠用嗎？
 
-日常分析夠用，但數量跟 Python 比不了。Python 有 pandas、NumPy、SciPy、statsmodels、scikit-learn、PyTorch，新方法通常也先出 Python 版。
+夠用，而且只要裝一套。Python 做資料分析通常要自己組：pandas 處理表格、SciPy 和 statsmodels 做檢定和迴歸、scikit-learn 跑模型、matplotlib 畫圖，每個套件各有各的寫法。
 
-Go 這邊套件少，所以 Insyra 的做法是一套包到底：讀 CSV/Excel、清理、分組、統計檢定、迴歸、畫圖，到 `ml`（scikit-learn 風格的模型）和 `nn`（神經網路）都在裡面。各家 Go 套件的比較可以看〈[Insyra vs Gota vs dataframe-go](/zh-tw/posts/insyra-vs-gota-vs-dataframe-go/)〉。
+Go 這邊 Insyra 一套就全包了：
+
+- `DataTable`、`DataList`：讀 CSV、Excel、JSON、SQL，清理、分組、樞紐
+- `stats`：t 檢定、ANOVA、卡方檢定、相關係數、迴歸
+- `plot`、`gplot`：互動圖表和靜態圖（PNG、PDF、SVG）
+- `ml`：scikit-learn 風格的迴歸、決策樹、隨機森林、梯度提升、交叉驗證
+- `nn`：神經網路訓練，也能跑 ONNX 模型
+- `csvxl`、`parquet`：Excel 轉換和 Parquet 讀寫
+
+全部在同一個 module 裡，`go get github.com/HazelnutParadise/insyra` 一行就裝好。冷門或剛發表的方法，Python 套件還是比較多，這時候可以用下面的 `py` 呼叫 Python。各家 Go 套件的比較可以看〈[Insyra vs Gota vs dataframe-go](/zh-tw/posts/insyra-vs-gota-vs-dataframe-go/)〉。
 
 ### 差異 4：Go 語言的統計功能，跟 Python 的 SciPy 比起來夠嗎？
 
@@ -207,10 +216,10 @@ RowNames   A(group1)   B(group2)   C(meandiff)  D(p-adj)  E(reject)
 工作重點是「探索」而不是「上線」的時候，用 Python 比較好。Go 語言在資料分析上有 3 個限制：
 
 1. **沒有 Jupyter 那種節奏。** 每天都在 notebook 裡試資料、畫圖、改想法，Python 最順。
-2. **套件和教學比較少。** 需要的方法只有 Python 套件有，或整個專案都靠 SciPy、statsmodels、PyTorch，硬寫成 Go 等於大部分還是在呼叫 Python。
+2. **冷門方法和教學還是 Python 多。** 日常分析 Insyra 一套就夠，但需要的方法只有 Python 套件有，或整個專案都靠 SciPy、statsmodels、PyTorch，硬寫成 Go 等於大部分還是在呼叫 Python。
 3. **團隊和平台要多學一個語言。** 同事、資料平台、雲端 notebook 都是 Python 的話，為了一點好處加進 Go 不一定划算。
 
-比較實際的做法是兩個一起用：用 Python 探索，把每天要跑的部分搬到 Go，真的離不開 Python 的那一步再用 `py` 呼叫。想試試 Go 這邊，可以從〈[用 Insyra 在 Go 裡做第一次資料分析](/zh-tw/posts/first-data-analysis-in-go-with-insyra/)〉開始，從讀 CSV 一路做到輸出報表。
+比較實際的做法是兩個一起用：用 Python 探索，把每天要跑的部分搬到 Go，讀檔、統計、畫圖、模型都交給 Insyra 一個套件，真的離不開 Python 的那一步再用 `py` 呼叫。想試試 Go 這邊，可以從〈[用 Insyra 在 Go 裡做第一次資料分析](/zh-tw/posts/first-data-analysis-in-go-with-insyra/)〉開始，從讀 CSV 一路做到輸出報表。
 
 ## Go 語言做資料分析還缺什麼？到 GitHub 開 issue
 
