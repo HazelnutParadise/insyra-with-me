@@ -23,7 +23,7 @@ Golang 和 Python 做資料分析，最大的差別不在能算什麼，而在�
 這篇的 Go 範例都用 [Insyra](https://github.com/HazelnutParadise/insyra) v0.3.5（目前最新版），資料表、統計、畫圖、機器學習一套全包，整篇只要裝這一個：
 
 ```bash
-go get github.com/HazelnutParadise/insyra
+go get github.com/HazelnutParadise/insyra/allpkgs
 ```
 
 還不確定 Go 到底能不能做資料分析，可以先看〈[Go 可以做資料分析嗎？](/zh-tw/posts/can-you-do-data-analysis-in-go/)〉，這篇直接進到下一個問題：什麼時候該選 Go。
@@ -53,7 +53,7 @@ Go 這邊 Insyra 一套就全包了：
 - `nn`：神經網路訓練，也能跑 ONNX 模型
 - `csvxl`、`parquet`：Excel 轉換和 Parquet 讀寫
 
-全部在同一個 module 裡，`go get github.com/HazelnutParadise/insyra` 一行就裝好。冷門或剛發表的方法，Python 套件還是比較多，這時候可以用下面的 `py` 呼叫 Python。各家 Go 套件的比較可以看〈[Insyra vs Gota vs dataframe-go](/zh-tw/posts/insyra-vs-gota-vs-dataframe-go/)〉。
+`go get github.com/HazelnutParadise/insyra/allpkgs` 一行就把這些子套件全部裝好。冷門或剛發表的方法，Python 套件還是比較多，這時候可以用下面的 `py` 呼叫 Python。各家 Go 套件的比較可以看〈[Insyra vs Gota vs dataframe-go](/zh-tw/posts/insyra-vs-gota-vs-dataframe-go/)〉。
 
 ### 差異 4：Go 語言的統計功能，跟 Python 的 SciPy 比起來夠嗎？
 

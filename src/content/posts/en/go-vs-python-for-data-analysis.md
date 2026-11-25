@@ -17,7 +17,7 @@ I like both. Python is where most of us learned pandas, and I still open a noteb
 The Go examples below use [Insyra](https://github.com/HazelnutParadise/insyra) v0.3.5, the current release. It's one dependency that covers data tables, statistics, charts and machine learning, so this is the only install the whole post needs:
 
 ```bash
-go get github.com/HazelnutParadise/insyra
+go get github.com/HazelnutParadise/insyra/allpkgs
 ```
 
 If you're still deciding whether Go can do data analysis at all, start with [Can you do data analysis in Go?](/posts/can-you-do-data-analysis-in-go/). This post assumes the answer is yes and asks the next question: when is Go actually the better choice?
@@ -34,7 +34,7 @@ The biggest differences are how you ship the result and how you explore the data
 | 4. Types | Checked when the code runs | Checked by the compiler before it runs |
 | 5. Mixing the two | Calling Go from Python isn't the usual path | Insyra's `py` package calls Python from Go and hands tables back and forth |
 
-Row 3 needs a closer look. A Python analysis is often five libraries glued together: pandas for the table, SciPy and statsmodels for tests and regression, scikit-learn for models, matplotlib for the chart, each with its own API. In Go, Insyra alone covers the whole workflow: `DataTable` and `DataList` for the data, `stats` for tests and regression, `plot` and `gplot` for charts, `ml` and `nn` for models, plus `csvxl` and `parquet` for files. It's all one module, so `go get github.com/HazelnutParadise/insyra` is the whole shopping list. Python still has more libraries overall, especially for niche or brand-new methods, and the `py` section below covers that case.
+Row 3 needs a closer look. A Python analysis is often five libraries glued together: pandas for the table, SciPy and statsmodels for tests and regression, scikit-learn for models, matplotlib for the chart, each with its own API. In Go, Insyra alone covers the whole workflow: `DataTable` and `DataList` for the data, `stats` for tests and regression, `plot` and `gplot` for charts, `ml` and `nn` for models, plus `csvxl` and `parquet` for files. One line, `go get github.com/HazelnutParadise/insyra/allpkgs`, installs every one of those packages. Python still has more libraries overall, especially for niche or brand-new methods, and the `py` section below covers that case.
 
 Insyra's README says its statistics are checked against R, its models against scikit-learn, and its neural networks against PyTorch and onnxruntime. So moving the math to Go doesn't mean trusting a new set of numbers blindly.
 
