@@ -4,6 +4,7 @@ import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 import { getPosts, slugOf, readingTime, fmtDate, tagSlug, categoryOf, type Post } from '../../../lib/posts';
 import { SITE, SITE_URL } from '../../../site.config';
+import UnpublishedBadge from '../../../components/UnpublishedBadge.astro';
 export async function getStaticPaths() {
   return (await getPosts('zh-tw')).map((post) => ({ params: { slug: slugOf(post) }, props: { post } }));
 }
@@ -32,6 +33,7 @@ if (d.faq?.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage
   <div class="wrap layout">
     <article>
       <nav class="crumbs meta" aria-label="Breadcrumb"><a href="/">Home</a> / <a href={`/category/${cat.slug}/`}>{cat.name}</a></nav>
+      <UnpublishedBadge post={post} />
       <h1>{d.title}</h1>
       <p class="meta">By {SITE.author} · <time datetime={d.pubDate.toISOString()}>{fmtDate(d.pubDate)}</time>
         {d.updatedDate && <> · Updated {fmtDate(d.updatedDate)}</>} · {readingTime(post.body)} min read · <a href={`/posts/${slugOf(post)}/`} hreflang="en" lang="en">Read in English</a></p>
