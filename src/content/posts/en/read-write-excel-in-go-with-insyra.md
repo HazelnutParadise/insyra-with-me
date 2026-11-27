@@ -4,7 +4,7 @@ description: "How to read and write Excel files in Golang: load a sheet into a D
 pubDate: 2026-11-28
 category: guides
 tags: ["excel", "xlsx", "golang", "datatable", "csv", "data-analysis"]
-faq: [{"q": "How do you read an Excel file in Golang?", "a": "Call insyra.ReadExcelSheet(path, sheet, false, true). It opens the workbook, reads one sheet into a DataTable and uses the first row as column names. For an upload or an HTTP body, insyra.ReadExcel does the same from any io.Reader."}, {"q": "Why are Excel numbers strings after reading them in Go?", "a": "In Insyra v0.3.5 every cell read from Excel arrives as text, the same way Excelize's GetRows returns strings. Convert a column with ParseNumbers and put it back with UpdateCol before doing math."}, {"q": "How do you write an Excel file in Golang without overwriting a sheet?", "a": "dt.ToExcel(path, insyra.ExcelWriteOptions{Sheet: \"2026\", SetColNamesToFirstRow: true}) adds the sheet and keeps the other sheets. If the sheet already exists it returns an error matching insyra.ErrSheetExists; set IfSheetExists: insyra.SheetExistsReplace to replace it."}, {"q": "How do you export Excel as an HTTP download in Go?", "a": "Set the Content-Type and Content-Disposition headers, then call dt.WriteExcel(w, opts) with the http.ResponseWriter. No temp file is needed."}]
+faq: [{"q": "How do you read an Excel file in Golang?", "a": "Use insyra.ReadExcelSheet(path, sheet, setFirstColToRowNames, setFirstRowToColNames). It opens the workbook and loads one sheet into a DataTable."}, {"q": "Why are Excel numbers strings after reading them in Go?", "a": "Because on Insyra v0.3.5, every cell read from Excel arrives as text."}, {"q": "How do you write an Excel file in Golang without overwriting a sheet?", "a": "With ToExcel, writing to a sheet that already exists fails by default with an error you can match with errors.Is(err, insyra.ErrSheetExists), and the file isn't touched. So a nightly job that runs twice can't quietly wipe last year's numbers."}, {"q": "How do you export Excel as an HTTP download in Go?", "a": "Set the Content-Type and Content-Disposition headers and call WriteExcel with the http.ResponseWriter. WriteExcel writes the table as a new one-sheet workbook to any io.Writer, so no temp file is involved."}]
 draft: false
 ---
 
@@ -187,11 +187,11 @@ is ErrSheetExists: true
 after replace: [2025 2026]
 ```
 
-This is my favorite part. Writing to a sheet that already exists fails by default with an error you can match with `errors.Is(err, insyra.ErrSheetExists)`, and the file isn't touched. So a nightly job that runs twice can't quietly wipe last year's numbers. When you do want to refresh a sheet, say so with `IfSheetExists: insyra.SheetExistsReplace`. The new sheet takes the old one's place in the tab order, so the workbook still reads 2025, 2026.
+This is my favorite part. With `ToExcel`, writing to a sheet that already exists fails by default with an error you can match with `errors.Is(err, insyra.ErrSheetExists)`, and the file isn't touched. So a nightly job that runs twice can't quietly wipe last year's numbers. When you do want to refresh a sheet, say so with `IfSheetExists: insyra.SheetExistsReplace`. The new sheet takes the old one's place in the tab order, so the workbook still reads 2025, 2026.
 
 ## How do you export Excel as an HTTP download in Golang?
 
-Set two headers and call `WriteExcel` with the `http.ResponseWriter`. `WriteExcel` writes the table as a new one-sheet workbook to any `io.Writer`, so no temp file is involved:
+Set the `Content-Type` and `Content-Disposition` headers and call `WriteExcel` with the `http.ResponseWriter`. `WriteExcel` writes the table as a new one-sheet workbook to any `io.Writer`, so no temp file is involved:
 
 ```go
 package main
