@@ -4,7 +4,7 @@ description: "Golang 怎麼讀取、寫入 Excel？從讀工作表、文字轉�
 pubDate: 2026-11-28
 category: guides
 tags: ["excel", "xlsx", "golang", "go語言", "csv", "資料分析"]
-faq: [{"q": "Golang 讀寫 Excel 要用什麼套件？", "a": "要排版、合併儲存格、畫圖表，用 Excelize；要把工作表讀成資料表來篩選、分組、加總，用 Insyra。Insyra 讀寫 Excel 底層用的就是 Excelize，兩個不衝突。"}, {"q": "Go 語言讀 Excel 為什麼數字變成字串？", "a": "Insyra v0.3.5 從 Excel 讀進來的儲存格都是文字，跟 Excelize 的 GetRows 一樣。要算數字的欄位，用 ParseNumbers 轉成數字，再用 UpdateCol 放回資料表。"}, {"q": "Golang 寫入 Excel 會覆蓋原本的工作表嗎？", "a": "不會。ToExcel 預設遇到同名工作表會回傳 insyra.ErrSheetExists，檔案完全不動；其他工作表也都保留。真的要覆蓋，設定 IfSheetExists: insyra.SheetExistsReplace。"}, {"q": "Golang 怎麼匯出 Excel 讓使用者下載？", "a": "在 HTTP handler 設好 Content-Type 和 Content-Disposition，再呼叫 dt.WriteExcel(w, opts)，直接寫進 http.ResponseWriter，不用先存暫存檔。"}]
+faq: [{"q": "Golang 讀寫 Excel 要用什麼套件？", "a": "要做「表格本身」用 Excelize，要處理「表格裡的資料」用 Insyra。Excelize 是 Go 最常見的 Excel 套件，Insyra 讀寫 Excel 底層也是用它，所以兩個不是二選一。"}, {"q": "Go 語言讀 Excel 為什麼數字變成字串？", "a": "因為 Insyra v0.3.5 從 Excel 讀進來的儲存格一律是文字。Excelize 的 GetRows 也是回傳字串，所以不意外，但第一次要加總時一定會踩到。"}, {"q": "Golang 寫入 Excel 會覆蓋原本的工作表嗎？", "a": "不會。ToExcel 對已經存在的工作表再寫一次，預設會失敗，錯誤可以用 errors.Is(err, insyra.ErrSheetExists) 判斷，檔案完全不會被動到。排程不小心跑兩次，也不會把去年的數字蓋掉。"}, {"q": "Golang 怎麼匯出 Excel 讓使用者下載？", "a": "在 HTTP handler 設好 Content-Type 和 Content-Disposition 兩個 header，再把 http.ResponseWriter 交給 WriteExcel。WriteExcel 會把資料表寫成一個新的活頁簿，寫進任何 io.Writer，中間不用產生暫存檔。"}]
 draft: false
 ---
 
@@ -193,11 +193,11 @@ is ErrSheetExists: true
 after replace: [2025 2026]
 ```
 
-重點在後半段：對已經存在的工作表再寫一次，預設會失敗，錯誤可以用 `errors.Is(err, insyra.ErrSheetExists)` 判斷，檔案完全不會被動到。排程不小心跑兩次，也不會把去年的數字蓋掉。真的要更新某一年，再明確加上 `IfSheetExists: insyra.SheetExistsReplace`；新的工作表會放回原本的位置，分頁順序還是 2025、2026。
+重點在後半段：`ToExcel` 對已經存在的工作表再寫一次，預設會失敗，錯誤可以用 `errors.Is(err, insyra.ErrSheetExists)` 判斷，檔案完全不會被動到。排程不小心跑兩次，也不會把去年的數字蓋掉。真的要更新某一年，再明確加上 `IfSheetExists: insyra.SheetExistsReplace`；新的工作表會放回原本的位置，分頁順序還是 2025、2026。
 
 ## 用法 5：Golang 怎麼匯出 Excel 讓使用者下載？
 
-在 HTTP handler 設好兩個 header，再把 `http.ResponseWriter` 交給 `WriteExcel`。`WriteExcel` 會把資料表寫成一個新的活頁簿，寫進任何 `io.Writer`，中間不用產生暫存檔：
+在 HTTP handler 設好 `Content-Type` 和 `Content-Disposition` 兩個 header，再把 `http.ResponseWriter` 交給 `WriteExcel`。`WriteExcel` 會把資料表寫成一個新的活頁簿，寫進任何 `io.Writer`，中間不用產生暫存檔：
 
 ```go
 package main
