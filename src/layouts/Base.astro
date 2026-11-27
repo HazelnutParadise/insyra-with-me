@@ -53,6 +53,18 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
   {ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
+  <script is:inline>
+    if (location.hostname === 'insyra.me') {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-C2G5HRQKGH');
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C2G5HRQKGH';
+      document.head.appendChild(s);
+    }
+  </script>
 </head>
 <body>
   <Header />
